@@ -1,30 +1,34 @@
 # Mapa Colaborativo dos Movimentos Sociais em Saúde
 
-## Instalação
+This repository is the **site-specific** MediaWiki application configuration and
+versioned wiki content for https://mapamovsaude.net.br.
 
-1. Clone o projeto [mediawiki-development](https://github.com/LibreCodeCoop/mediawiki-development): `git clone https://github.com/LibreCodeCoop/mediawiki-development`
-2. Acesse a pasta do projeto: `cd wediawiki-development`
-3. Crie uma pasta chamada _volumes_: `mkdir volumes`
-4. Clone o projeto _mapa-colaborativo_ dentro da pasta _volumes_ em uma pasta chamada _src_: `git clone https://github.com/LibreCodeCoop/mapa-colaborativo.git volumes/src`
-5. Crie o subdiretório _/mysql/dump_ dentro da pasta _volumes_: `mkdir -p volumes/mysql/dump`
-6. Coloque o dump do seu projeto na pasta `volumes/mysql/dump`
-7. Caso necessário, crie o arquivo `.env` ou utilize um existente.
-8. Clone o projeto do [MediaWiki](https://www.mediawiki.org/) no subdiretório _volumes/mediawiki_: `git clone  --progress --single-branch --depth 1 --branch 1.41.0 --recurse-submodules -j 4 https://gerrit.wikimedia.org/r/mediawiki/core.git volumes/mediawiki`
-9. Inicie o projeto: `docker compose up -d`
-10. Acesse o conteiner do projeto: `docker compose exec -u www-data mediawiki bash`
-11. Execute a instalação das extensões: `composer update --no-dev -o`
-12. Execute a atualização do banco: `php maintenance/update.php --quick`
-13. Se tiver algum patch a aplicar, execute: `cd volumes/mediawiki;git apply ../src/patch-01.diff`
+## Responsibilities
+- `mediawiki/LocalSettings.php`: site identity, enabled extensions, cache and themes.
+- `dependencies/`: site-specific Composer manifest, patches and tests.
+- `mediawiki/themes/`: Mapa-specific styles and assets.
+- Versioned wiki page sources, forms, documentation and site migrations.
 
-## Editar topo
+**Not this repository:** MediaWiki core, reusable development Docker images,
+WikiFavelas settings, or custom executable extension services. The separate
+`mediawiki-development` project owns generic local setup. The proposed
+`mediawiki-extension-article-geolocation` repository will own the executable
+Page Forms integration, GeoData validation, moderation and feed jobs.
 
-https://www.mediawiki.org/wiki/Manual:Interface/Sitenotice
+## Split and production continuity
+This main branch is a direct rename of the historical
+`FiocruzLivre/mediawiki-settings:saude` branch at commit
+`3048fa44dd771e28e03cfe7ed245de8ac7b3de54`.
+Git tree equality with the production checkout commit
+`64dff4b9ac09d5a73b1967207b0e45c17428edb8` was verified on 2026-10-30.
+The existing MariaDB and uploaded images remain on the production server;
+this repository does not contain backup data or secrets.
 
+Do **not** change production merely by selecting the new branch. Validate the
+same tree and effective Docker Compose first; repoint Git remote without running
+Composer, schema migrations or reloading containers. Maintain the existing
+backup cron and operational rollback procedure.
 
-## Menu
-
-https://www.mediawiki.org/wiki/Manual:Interface/Sidebar
-
-
-## CSS
-https://www.mediawiki.org/wiki/Manual:CSS
+`content/geolocation` (port of the Page Forms source) and
+`tools/legacy-map-migration` (82-marker audit) exist only on independent
+candidate branches pending tests and review.
