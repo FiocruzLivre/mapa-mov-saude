@@ -10,9 +10,9 @@ test('formulário real de geolocalização permanece atualizado no README', asyn
     'http://127.0.0.1:8765/index.php?title=Especial:FormEdit/Artigo_com_geolocalização/Artigo_de_exemplo',
   )
 
-  await expect(page.getByText('Localização geográfica (opcional)')).toBeVisible()
-  await expect(page.getByText('Latitude', { exact: true })).toBeVisible()
-  await expect(page.getByText('Longitude', { exact: true })).toBeVisible()
+  await expect(page.locator('h1').filter({ hasText: 'Localização geográfica (opcional)' }).first()).toBeVisible()
+  await expect(page.getByText('Latitude', { exact: true }).first()).toBeVisible()
+  await expect(page.getByText('Longitude', { exact: true }).first()).toBeVisible()
 
   await page.locator('input[name*="latitude"]').first().fill('-3.68274')
   await page.locator('input[name*="longitude"]').first().fill('-40.3512')
