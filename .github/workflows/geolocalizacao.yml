@@ -59,6 +59,10 @@ jobs:
             --pass senha_de_teste --lang pt-br \
             --extensions GeoData,Scribunto,PageForms \
             "Mapa de teste" editor_teste
+          cat <<'PHP' >> "$RUNNER_TEMP/mediawiki/LocalSettings.php"
+          $wgServer = 'http://127.0.0.1:8765';
+          $wgArticlePath = '/index.php?title=$1';
+          PHP
 
       - name: Validar regras de negócio com PHPUnit e GeoData
         working-directory: ${{ runner.temp }}/mediawiki
