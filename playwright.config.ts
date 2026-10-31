@@ -26,7 +26,7 @@ export default defineConfig({
   },
   webServer: {
     command: 'php -S 127.0.0.1:8765 -t "' + root + '"',
-    url: 'http://127.0.0.1:8765',
+    url: 'http://127.0.0.1:8765/api.php?action=query&format=json',
     reuseExistingServer: false,
     timeout: 45_000,
   },
