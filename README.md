@@ -9,7 +9,9 @@ Configurações e dependências do MediaWiki usadas em [mapamovsaude.net.br](htt
 - `dependencies/`: dependências Composer e ajustes necessários.
 - `test/`: testes de configuração e compatibilidade.
 
-O ambiente Docker genérico de desenvolvimento fica em [mediawiki-development](https://github.com/FiocruzLivre/mediawiki-development). O código de geolocalização pertence à extensão [ArticleGeolocation](https://github.com/FiocruzLivre/mediawiki-extension-article-geolocation).
+A imagem e o Compose compartilhados para desenvolvimento **e produção** ficam em [mediawiki-development](https://github.com/FiocruzLivre/mediawiki-development). Para uma nova instalação, monte o diretório `mediawiki/` deste repositório em `/var/www/src/mediawiki` por volume ou clone o repositório em `volumes/src` do ambiente compartilhado. Configure banco, proxy e segredos no `.env` e no `docker-compose.override.yml` não versionados daquele ambiente, sem modificar o Compose principal.
+
+A geolocalização opcional pertence à extensão independente [ArticleGeolocation](https://github.com/FiocruzLivre/mediawiki-extension-article-geolocation).
 
 ## Verificação
 
