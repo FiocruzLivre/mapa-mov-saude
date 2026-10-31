@@ -6,6 +6,7 @@ use MediaWiki\Title\Title;
 
 /**
  * Executado em banco descartável MediaWiki com Scribunto e GeoData ativos.
+ * @coversNothing
  * @group Database
  */
 class GeolocalizacaoFormularioTest extends MediaWikiIntegrationTestCase {
