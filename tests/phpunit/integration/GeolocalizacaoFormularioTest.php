@@ -55,6 +55,29 @@ class GeolocalizacaoFormularioTest extends MediaWikiIntegrationTestCase {
         yield 'coordenada ausente' => [ '', '-40', 'sim', false ];
     }
 
+    /** @dataProvider invalidClassifications */
+    public function testInvalidClassificationDoesNotCreatePrimaryCoordinate(
+        string $precision, string $kind
+    ): void {
+        $page = $this->getNonexistingTestPage();
+        $markup = '{{Geolocalização do artigo|latitude=-3.68274|longitude=-40.3512'
+            . '|precisao=' . $precision . '|tipo_local=' . $kind
+            . '|exibir_no_mapa=sim}}';
+        $this->editPage( $page, $markup );
+        $this->runJobs();
+        $this->assertSame(
+            [],
+            GeoData::getAllCoordinates( $page->getId(), [ 'gt_primary' => 1 ], DB_PRIMARY )
+        );
+    }
+
+    public static function invalidClassifications(): iterable {
+        yield 'precisão desconhecida' => [ 'endereco_privado', 'atuacao' ];
+        yield 'tipo desconhecido' => [ 'municipio', 'endereco_privado' ];
+        yield 'precisão vazia' => [ '', 'atuacao' ];
+        yield 'tipo vazio' => [ 'municipio', '' ];
+    }
+
     public function testRemovalOfGeolocationRemovesGeoDataCoordinates(): void {
         $page = $this->getNonexistingTestPage();
         $first = '{{Geolocalização do artigo|latitude=-3.68274|longitude=-40.3512'
@@ -68,7 +91,7 @@ class GeolocalizacaoFormularioTest extends MediaWikiIntegrationTestCase {
         $this->assertSame( [], GeoData::getAllCoordinates( $page->getId(), [], DB_PRIMARY ) );
     }
 
-    public function testUnrelatedArticleTextIsPreservedWhenLocationChanges(): void {
+    public function testSourceEditingKeepsUnrelatedWikitextWhenLocationChanges(): void {
         $page = $this->getNonexistingTestPage();
         $text = "== Conteúdo ==\nReferência e [[Categoria:Saúde coletiva]]\n";
         $location = '{{Geolocalização do artigo|latitude=-3|longitude=-40'
