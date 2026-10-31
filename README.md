@@ -1,30 +1,24 @@
 # Mapa Colaborativo dos Movimentos Sociais em Saúde
 
-## Instalação
+Configurações e dependências do MediaWiki usadas em [mapamovsaude.net.br](https://mapamovsaude.net.br/).
 
-1. Clone o projeto [mediawiki-development](https://github.com/LibreCodeCoop/mediawiki-development): `git clone https://github.com/LibreCodeCoop/mediawiki-development`
-2. Acesse a pasta do projeto: `cd wediawiki-development`
-3. Crie uma pasta chamada _volumes_: `mkdir volumes`
-4. Clone o projeto _mapa-colaborativo_ dentro da pasta _volumes_ em uma pasta chamada _src_: `git clone https://github.com/LibreCodeCoop/mapa-colaborativo.git volumes/src`
-5. Crie o subdiretório _/mysql/dump_ dentro da pasta _volumes_: `mkdir -p volumes/mysql/dump`
-6. Coloque o dump do seu projeto na pasta `volumes/mysql/dump`
-7. Caso necessário, crie o arquivo `.env` ou utilize um existente.
-8. Clone o projeto do [MediaWiki](https://www.mediawiki.org/) no subdiretório _volumes/mediawiki_: `git clone  --progress --single-branch --depth 1 --branch 1.41.0 --recurse-submodules -j 4 https://gerrit.wikimedia.org/r/mediawiki/core.git volumes/mediawiki`
-9. Inicie o projeto: `docker compose up -d`
-10. Acesse o conteiner do projeto: `docker compose exec -u www-data mediawiki bash`
-11. Execute a instalação das extensões: `composer update --no-dev -o`
-12. Execute a atualização do banco: `php maintenance/update.php --quick`
-13. Se tiver algum patch a aplicar, execute: `cd volumes/mediawiki;git apply ../src/patch-01.diff`
+## Estrutura
 
-## Editar topo
+- `mediawiki/LocalSettings.php`: configuração do site e das extensões.
+- `mediawiki/themes/`: estilos do tema.
+- `dependencies/`: dependências Composer e ajustes necessários.
+- `test/`: testes de configuração e compatibilidade.
 
-https://www.mediawiki.org/wiki/Manual:Interface/Sitenotice
+A imagem e o Compose compartilhados para desenvolvimento **e produção** ficam em [mediawiki-development](https://github.com/FiocruzLivre/mediawiki-development). Para uma nova instalação, monte o diretório `mediawiki/` deste repositório em `/var/www/src/mediawiki` por volume ou clone o repositório em `volumes/src` do ambiente compartilhado. Configure banco, proxy e segredos no `.env` e no `docker-compose.override.yml` não versionados daquele ambiente, sem modificar o Compose principal.
 
+A geolocalização opcional pertence à extensão independente [ArticleGeolocation](https://github.com/FiocruzLivre/mediawiki-extension-article-geolocation).
 
-## Menu
+## Verificação
 
-https://www.mediawiki.org/wiki/Manual:Interface/Sidebar
+Execute no checkout deste repositório:
 
+```sh
+bats --recursive test
+```
 
-## CSS
-https://www.mediawiki.org/wiki/Manual:CSS
+Para instalar ou atualizar dependências, siga [dependencies/README.md](dependencies/README.md) e valide o resultado em homologação. Não execute `composer update` diretamente na produção.
