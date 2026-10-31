@@ -1,0 +1,103 @@
+name: Testar formulário de geolocalização MediaWiki
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  mediawiki:
+    runs-on: ubuntu-latest
+    services:
+      mariadb:
+        image: mariadb:11.8.9
+        env:
+          MARIADB_DATABASE: mapa_forms_test
+          MARIADB_USER: forms
+          MARIADB_PASSWORD: senha_de_teste
+          MARIADB_ROOT_PASSWORD: root_de_teste
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=5s --health-timeout=5s --health-retries=30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2.40.0
+        with:
+          php-version: '8.5'
+          extensions: mbstring, intl, dom, xml, mysqlnd, pdo_mysql, gd, zip, fileinfo, luasandbox
+          coverage: none
+          tools: composer:v2
+
+      - name: Preparar MediaWiki e extensões nativas
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --branch 1.46.2 \
+            https://gerrit.wikimedia.org/r/mediawiki/core.git "$RUNNER_TEMP/mediawiki"
+          for extension in GeoData Scribunto PageForms; do
+            git clone --depth 1 --branch REL1_46 \
+              "https://gerrit.wikimedia.org/r/mediawiki/extensions/$extension.git" \
+              "$RUNNER_TEMP/mediawiki/extensions/$extension"
+          done
+          git clone --depth 1 --branch REL1_46 \
+            https://gerrit.wikimedia.org/r/mediawiki/skins/Vector.git \
+            "$RUNNER_TEMP/mediawiki/skins/Vector"
+          cd "$RUNNER_TEMP/mediawiki"
+          composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Instalar wiki em banco descartável
+        working-directory: ${{ runner.temp }}/mediawiki
+        run: |
+          php maintenance/run.php install \
+            --dbtype mysql --dbserver 127.0.0.1 \
+            --dbname mapa_forms_test --dbuser forms --dbpass senha_de_teste \
+            --installdbuser forms --installdbpass senha_de_teste \
+            --server http://127.0.0.1:8765 --scriptpath / \
+            --pass senha_de_teste --lang pt-br \
+            --extensions GeoData,Scribunto,PageForms --skins Vector \
+            "Mapa de teste" editor_teste
+          cat <<'PHP' >> "$RUNNER_TEMP/mediawiki/LocalSettings.php"
+          $wgServer = 'http://127.0.0.1:8765';
+          $wgScriptPath = '';
+          $wgResourceBasePath = '';
+          $wgLoadScript = '/load.php';
+          $wgDefaultSkin = 'vector-2022';
+          $wgArticlePath = '/index.php?title=$1';
+          PHP
+
+      - name: Validar regras de negócio com PHPUnit e GeoData
+        working-directory: ${{ runner.temp }}/mediawiki
+        run: composer phpunit:entrypoint -- "$GITHUB_WORKSPACE/tests/phpunit/integration" --colors=never
+
+      - name: Instalar páginas reais do Page Forms
+        env:
+          MEDIAWIKI_ROOT: ${{ runner.temp }}/mediawiki
+        run: bash tests/e2e/seed-pages.sh
+
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Preparar Playwright
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Comparar screenshot do formulário com a interface real
+        env:
+          MEDIAWIKI_ROOT: ${{ runner.temp }}/mediawiki
+        run: npm run screenshots:check
+      - name: Capturas para diagnóstico
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: captura-formulario
+          path: |
+            test-results/
+            img/screenshots/
+          retention-days: 7
