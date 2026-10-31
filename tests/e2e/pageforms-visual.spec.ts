@@ -16,6 +16,9 @@ test('formulário real de geolocalização permanece atualizado no README', asyn
 
   await page.locator('input[name*="latitude"]').first().fill('-3.68274')
   await page.locator('input[name*="longitude"]').first().fill('-40.3512')
+  await page.locator('select[name*="precisao"]').first().selectOption('municipio')
+  await page.locator('select[name*="tipo_local"]').first().selectOption('atuacao')
+  await page.locator('select[name*="exibir_no_mapa"]').first().selectOption('sim')
 
   await page.evaluate(async () => {
     await document.fonts.ready

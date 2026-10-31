@@ -64,6 +64,10 @@ jobs:
             "Mapa de teste" editor_teste
           cat <<'PHP' >> "$RUNNER_TEMP/mediawiki/LocalSettings.php"
           $wgServer = 'http://127.0.0.1:8765';
+          $wgScriptPath = '';
+          $wgResourceBasePath = '';
+          $wgLoadScript = '/load.php';
+          $wgDefaultSkin = 'vector-2022';
           $wgArticlePath = '/index.php?title=$1';
           PHP
 
