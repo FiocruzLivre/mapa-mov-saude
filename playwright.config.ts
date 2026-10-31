@@ -10,7 +10,7 @@ export default defineConfig({
   retries: 0,
   workers: 1,
   timeout: 60_000,
-  snapshotPathTemplate: 'img/screenshots/{arg}',
+  snapshotPathTemplate: 'img/screenshots/{arg}.png',
   expect: {
     toHaveScreenshot: {
       animations: 'disabled',
