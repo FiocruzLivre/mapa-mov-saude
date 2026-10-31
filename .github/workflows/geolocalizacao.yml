@@ -40,7 +40,7 @@ jobs:
           set -euo pipefail
           git clone --depth 1 --branch 1.46.2 \
             https://gerrit.wikimedia.org/r/mediawiki/core.git "$RUNNER_TEMP/mediawiki"
-          for extension in GeoData Scribunto; do
+          for extension in GeoData Scribunto PageForms; do
             git clone --depth 1 --branch REL1_46 \
               "https://gerrit.wikimedia.org/r/mediawiki/extensions/$extension.git" \
               "$RUNNER_TEMP/mediawiki/extensions/$extension"
@@ -55,11 +55,36 @@ jobs:
             --dbtype mysql --dbserver 127.0.0.1 \
             --dbname mapa_forms_test --dbuser forms --dbpass senha_de_teste \
             --installdbuser forms --installdbpass senha_de_teste \
-            --server http://localhost --scriptpath / \
+            --server http://127.0.0.1:8765 --scriptpath / \
             --pass senha_de_teste --lang pt-br \
-            --extensions GeoData,Scribunto \
+            --extensions GeoData,Scribunto,PageForms \
             "Mapa de teste" editor_teste
 
       - name: Validar regras de negócio com PHPUnit e GeoData
         working-directory: ${{ runner.temp }}/mediawiki
         run: composer phpunit:entrypoint -- "$GITHUB_WORKSPACE/tests/phpunit/integration" --colors=never
+
+      - name: Instalar páginas reais do Page Forms
+        env:
+          MEDIAWIKI_ROOT: ${{ runner.temp }}/mediawiki
+        run: bash tests/e2e/seed-pages.sh
+
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Preparar Playwright
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Comparar screenshot do formulário com a interface real
+        env:
+          MEDIAWIKI_ROOT: ${{ runner.temp }}/mediawiki
+        run: npm run screenshots:check
+      - name: Capturas para diagnóstico
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: captura-formulario
+          path: test-results/
+          retention-days: 7

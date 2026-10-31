@@ -1,6 +1,10 @@
-# Formulários de geolocalização
+# Formulário de geolocalização
 
-Fontes de páginas MediaWiki para Page Forms 6.0.11, GeoData e Scribunto.
+Permite às iniciativas registrar ou atualizar sua localização nos artigos do MapaMovSaúde, com controle editorial separado para publicação no mapa. Integra-se ao Page Forms, GeoData e Scribunto existentes.
+
+![Formulário para informar a localização de uma iniciativa](../../img/screenshots/formulario-geolocalizacao.png)
+
+A captura corresponde à interface real do MediaWiki e é verificada automaticamente por Playwright.
 
 | Arquivo | Página |
 | --- | --- |
