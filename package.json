@@ -1,0 +1,12 @@
+{
+  "name": "mapamovsaude-pageforms-screenshots",
+  "private": true,
+  "description": "Capture real MediaWiki Page Forms UI for review",
+  "scripts": {
+    "screenshots:check": "playwright test tests/e2e/pageforms-visual.spec.ts",
+    "screenshots:update": "playwright test tests/e2e/pageforms-visual.spec.ts --update-snapshots"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}
