@@ -20,5 +20,6 @@ test('formulário real de geolocalização permanece atualizado no README', asyn
   await page.evaluate(async () => {
     await document.fonts.ready
   })
-  await expect(page.locator('#mw-content-text')).toHaveScreenshot('formulario-geolocalizacao.png')
+  await expect(page.locator('fieldset').filter({ hasText: 'Latitude' }).first())
+    .toHaveScreenshot('formulario-geolocalizacao.png')
 })
