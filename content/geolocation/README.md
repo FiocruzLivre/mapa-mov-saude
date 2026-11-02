@@ -2,6 +2,8 @@
 
 O MapaMovSaúde chama os conteúdos de **histórias**, sobre movimentos sociais e suas ações. Escrever uma história não exige informar localização.
 
+O texto da história utiliza o editor visual do MediaWiki dentro do Page Forms, com barra de formatação, links e recursos editoriais. A integração requer VisualEditor e VEForAll instalados e ativos; um campo de wikitexto puro não é uma alternativa aceitável para publicação deste formulário.
+
 Ao editar uma história, a pessoa pode marcar “Quero adicionar uma localização a esta história”, buscar um local e posicionar o marcador no mapa Leaflet. Pode ajustar o ponto diretamente no mapa; não precisa conhecer nem digitar latitude e longitude.
 
 A localização registrada na história é pública. A inclusão do PIN no mapa da página inicial depende de aprovação editorial, que pertence à extensão [ArticleGeolocation](https://github.com/FiocruzLivre/mediawiki-extension-article-geolocation). Sem pedido explícito, o formulário não registra um ponto no GeoData.

@@ -13,3 +13,10 @@ php maintenance/run.php edit --user editor_teste 'Form:Artigo com geolocalizaç�
     < "$pages/Form-Artigo_com_geolocalizacao.wiki"
 php maintenance/run.php edit --user editor_teste 'MediaWiki:Common.js' \
     < "$pages/MediaWiki-Common.js"
+
+# História existente para testar edição visual sem perder formatação ou categorias.
+php maintenance/run.php edit --user editor_teste 'Artigo de exemplo' <<'WIKITEXT'
+== Trajetória ==
+História preservada no formulário.
+[[Categoria:Saúde]]
+WIKITEXT

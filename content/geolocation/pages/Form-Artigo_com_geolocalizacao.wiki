@@ -13,7 +13,7 @@ A localização poderá aparecer na história. Para entrar no mapa público da p
 </div>
 {{{end template}}}
 = Sua história =
-{{{standard input|free text|rows=25}}}
+{{{standard input|free text|rows=25|editor=visualeditor|class=toolbarOnTop}}}
 {{{standard input|summary}}}
 {{{standard input|preview}}}
 {{{standard input|save}}}

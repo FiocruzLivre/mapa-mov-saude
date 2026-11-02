@@ -11,6 +11,10 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   )
 
   await expect(page.getByRole('heading', { name: 'Localização (opcional)' })).toBeVisible()
+  const richEditor = page.locator('.ve-area-wrapper .ve-ce-documentNode').first()
+  await expect(richEditor).toBeVisible({ timeout: 20000 })
+  await expect(page.locator('.ve-area-wrapper .oo-ui-toolbar')).toBeVisible()
+  await expect(page.locator('.ve-area-wrapper textarea.visualeditor')).toBeHidden()
   const optIn = page.locator('.pf-checkbox-input-container input[type="checkbox"]').first()
   await expect(optIn).not.toBeChecked()
   await expect(page.locator('#local-de-atuacao')).toBeHidden()
@@ -49,9 +53,10 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   await expect(technicalInput).not.toHaveValue('')
   await advanced.locator('summary').click()
 
-  // Contrato do editor: o texto livre da história não pode desaparecer ao salvar a localização.
-  const content = '== Trajetória ==\nHistória preservada no formulário.\n[[Categoria:Saúde]]'
-  await page.locator('textarea[name*="free_text"]').first().fill(content)
+  // O usuário escreve no editor rico, sem digitar wikitexto.
+  await richEditor.click()
+  await page.keyboard.press('End')
+  await page.keyboard.type(' História escrita com editor visual.')
   await page.locator('#wpSave').click()
 
   const response = await page.request.get(
@@ -61,6 +66,7 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   const data = await response.json()
   const wikiText = data.query.pages[0].revisions[0].slots.main.content as string
   expect(wikiText).toContain('História preservada no formulário.')
+  expect(wikiText).toContain('História escrita com editor visual.')
   expect(wikiText).toContain('[[Categoria:Saúde]]')
   expect(wikiText).toContain('localizacao=')
 
@@ -70,6 +76,6 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   )
   await expect(optIn).toBeChecked()
   await expect(page.locator('#local-de-atuacao input.pfCoordsInput')).not.toHaveValue('')
-  await expect(page.locator('textarea[name*="free_text"]').first())
-    .toHaveValue(/História preservada no formulário/)
+  await expect(page.locator('.ve-area-wrapper .ve-ce-documentNode').first())
+    .toContainText('História escrita com editor visual.')
 })

@@ -204,6 +204,7 @@ $wgRestrictDisplayTitle = false;
 
 # Visual Editor
 wfLoadExtension( 'VisualEditor' );
+wfLoadExtension( 'VEForAll' );
 $wgGroupPermissions['user']['writeapi'] = true;
 $wgVisualEditorSupportedSkins = ['*'];
 $wgUsePathInfo = true;
