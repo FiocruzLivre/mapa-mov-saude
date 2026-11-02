@@ -18,6 +18,8 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
 
   await optIn.check()
   await expect(page.locator('#local-de-atuacao')).toBeVisible()
+  await expect(page.getByText('Procure município, bairro ou CEP', { exact: false })).toBeVisible()
+  await expect(page.locator('#local-de-atuacao input.pfAddressInput')).toBeVisible()
   const map = page.locator('#local-de-atuacao .pfMapCanvas')
   await expect(map).toBeVisible()
   await expect(page.locator('#local-de-atuacao .leaflet-tile-pane')).toBeAttached()
