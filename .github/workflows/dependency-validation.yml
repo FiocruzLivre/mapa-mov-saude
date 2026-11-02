@@ -4,13 +4,9 @@ on:
   push:
     branches:
       - main
-      - saude
-      - wikifavelas
   pull_request:
     branches:
       - main
-      - saude
-      - wikifavelas
 
 permissions:
   contents: read

@@ -1,22 +1,24 @@
 # Mapa Colaborativo dos Movimentos Sociais em Saúde
 
-## Instalação e atualização
+Configurações e dependências do MediaWiki usadas em [mapamovsaude.net.br](https://mapamovsaude.net.br/).
 
-O ambiente de desenvolvimento é mantido em [mediawiki-development](https://github.com/FiocruzLivre/mediawiki-development). Consulte as instruções desse repositório para preparar os volumes, configurar o ambiente e iniciar o MediaWiki.
+## Estrutura
 
-Este repositório contém as configurações e o conteúdo específicos do MapaMovSaúde. As versões do MediaWiki, do PHP e das extensões devem ser definidas e verificadas na configuração de infraestrutura e nos manifestos de dependências, não duplicadas neste README.
+- `mediawiki/LocalSettings.php`: configuração do site e das extensões.
+- `mediawiki/themes/`: estilos do tema.
+- `dependencies/`: dependências Composer e ajustes necessários.
+- `test/`: testes de configuração e compatibilidade.
 
-Antes de atualizar ou implantar, valide as mudanças em homologação, execute os testes pertinentes e preserve um procedimento de reversão.
+A imagem reutilizável do MediaWiki e o Compose base ficam em [mediawiki-development](https://github.com/FiocruzLivre/mediawiki-development). Para uma nova instalação, monte o diretório `mediawiki/` deste repositório em `/var/www/src/mediawiki` por volume ou clone o repositório em `volumes/src` do ambiente compartilhado. Configure banco, proxy e segredos no `.env` e no `docker-compose.override.yml` não versionados daquele ambiente, sem modificar o Compose principal.
 
-## Editar topo
+A geolocalização opcional pertence à extensão independente [ArticleGeolocation](https://github.com/FiocruzLivre/mediawiki-extension-article-geolocation).
 
-https://www.mediawiki.org/wiki/Manual:Interface/Sitenotice
+## Verificação
 
+Execute no checkout deste repositório:
 
-## Menu
+```sh
+bats --recursive test
+```
 
-https://www.mediawiki.org/wiki/Manual:Interface/Sidebar
-
-
-## CSS
-https://www.mediawiki.org/wiki/Manual:CSS
+Para instalar ou atualizar dependências, siga [dependencies/README.md](dependencies/README.md) e valide o resultado em homologação. Não execute `composer update` diretamente na produção.
