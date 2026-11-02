@@ -1,5 +1,12 @@
 // Ajustes do Page Forms, sem modificar a extensão ou os dados da história.
 $( function () {
+    // O editor visual nativo abre com apenas 130px; espaço real para escrever.
+    if ( document.querySelector( '#pfForm #pf_free_text.visualeditor' ) && mw.util && mw.util.addCSS ) {
+        mw.util.addCSS( '#pfForm .ve-area-wrapper .ve-ce-documentNode {' +
+            'min-height: 300px; box-sizing: border-box; padding: 18px 20px;' +
+            '}' );
+    }
+
     const section = document.querySelector( '#local-de-atuacao' );
     const canvas = section && section.querySelector( '.pfMapCanvas' );
     const coordinates = section && section.querySelector( '.pfCoordsInput' );
@@ -13,9 +20,9 @@ $( function () {
     const details = document.createElement( 'details' );
     details.className = 'mapamov-location-advanced';
     const summary = document.createElement( 'summary' );
-    summary.textContent = 'Ver coordenadas (avançado)';
+    summary.textContent = 'Ajustar o ponto manualmente (avançado)';
     const explanation = document.createElement( 'p' );
-    explanation.textContent = 'Este valor é atualizado pelo mapa. Normalmente não é necessário editá-lo.';
+    explanation.textContent = 'Estes números indicam a posição do ponto no mapa. Normalmente não é necessário alterá-los.';
     details.append( summary, explanation, inputWrapper );
     canvas.parentElement.appendChild( details );
 

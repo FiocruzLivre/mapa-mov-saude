@@ -19,4 +19,5 @@ php maintenance/run.php edit --user editor_teste 'Artigo de exemplo' <<'WIKITEXT
 == Trajetória ==
 História preservada no formulário.
 [[Categoria:Saúde]]
+{{Geolocalização do artigo|exibir_no_mapa=|localizacao=}}
 WIKITEXT

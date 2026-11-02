@@ -4,19 +4,19 @@ Formulário opcional para escrever ou editar uma história, sem substituir o edi
 </noinclude><includeonly>
 {{{info|create title=Escrever sua história|edit title=Editar sua história}}}
 = Sua história =
-Escreva sua história usando o editor visual abaixo. Você pode formatar o texto, criar títulos, adicionar links e referências sem conhecer código wiki.
+Escreva ou edite o texto abaixo. Use a barra de ferramentas para criar títulos, destacar palavras e inserir links.
 {{{standard input|free text|rows=25|editor=visualeditor|class=toolbarOnTop}}}
 
-= Localização (opcional) =
-{{{for template|Geolocalização do artigo|label=Localização|maximum instances=1}}}
-{{{field|exibir_no_mapa|input type=checkbox|show on select=local-de-atuacao|label=Quero adicionar uma localização a esta história.}}}
+= Localização =
+{{{for template|Geolocalização do artigo|maximum instances=1}}}
+{{{field|exibir_no_mapa|input type=checkbox|show on select=local-de-atuacao|label=Adicionar uma localização a esta história (opcional).}}}
 <div id="local-de-atuacao">
-Busque um município, bairro ou endereço e selecione o ponto no mapa. Você também pode reposicionar o marcador. Evite indicar endereços residenciais ou locais privados.
+Procure um bairro ou município, ou clique no mapa para marcar o local. Para mudar o ponto, clique novamente no mapa ou arraste o marcador. Não marque residências nem locais privados.
 {{{field|localizacao|input type=leaflet|height=280|width=100%|starting bounds=-34,-74;6,-34}}}
-A localização poderá aparecer na história. Para entrar no mapa público da página inicial, ela precisa da aprovação de um moderador.
+O ponto será associado à história. Para aparecer no mapa da página inicial, ele precisará ser aprovado por um moderador.
 </div>
 {{{end template}}}
-{{{standard input|summary}}}
-{{{standard input|preview}}}
-{{{standard input|save}}}
+= Concluir =
+{{{standard input|preview|label=Ver como ficará}}}
+{{{standard input|save|label=Salvar história}}}
 </includeonly>
