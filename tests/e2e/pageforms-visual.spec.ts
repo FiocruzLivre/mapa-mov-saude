@@ -30,6 +30,8 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   await expect(map).toBeVisible()
   await expect(page.locator('#local-de-atuacao .leaflet-tile-pane')).toBeAttached()
   await expect(page.locator('#local-de-atuacao .leaflet-tile-loaded').first()).toBeVisible({ timeout: 15000 })
+  await expect.poll(async () => page.locator('#local-de-atuacao .leaflet-tile-loaded').count(), { timeout: 15000 })
+    .toBeGreaterThan(2)
 
   await map.click({ position: { x: 170, y: 110 } })
   await expect(page.locator('#local-de-atuacao input.pfCoordsInput')).not.toHaveValue('')

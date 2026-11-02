@@ -11,3 +11,5 @@ php maintenance/run.php edit --user editor_teste 'Template:Geolocalização do a
     < "$pages/Template-Geolocalizacao_do_artigo.wiki"
 php maintenance/run.php edit --user editor_teste 'Form:Artigo com geolocalização' \
     < "$pages/Form-Artigo_com_geolocalizacao.wiki"
+php maintenance/run.php edit --user editor_teste 'MediaWiki:Common.js' \
+    < "$pages/MediaWiki-Common.js"
