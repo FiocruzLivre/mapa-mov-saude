@@ -93,11 +93,15 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   await advanced.locator('summary').click()
 
   // O usuário escreve no editor rico, sem digitar wikitexto.
-  await richEditor.click()
-  await page.keyboard.press('ControlOrMeta+End')
-  await page.keyboard.press('Enter')
-  await page.keyboard.type('História escrita com editor visual.')
+  const paragraph = richEditor.locator('.ve-ce-paragraphNode').first()
+  await paragraph.click()
+  await page.keyboard.press('Home')
+  await page.keyboard.type('História escrita com editor visual. ')
   await expect(richEditor).toContainText('História escrita com editor visual.')
+  await expect.poll(async () => page.evaluate(() => {
+    const instances = (window as any).jQuery([]).getVEInstances()
+    return instances[0].target.getSurface().getHtml().includes('História escrita com editor visual.')
+  })).toBe(true)
   const save = page.locator('#wpSave button[type="submit"]')
   await expect(save).toBeEnabled()
   await save.click()

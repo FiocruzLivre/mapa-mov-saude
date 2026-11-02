@@ -81,7 +81,7 @@ jobs:
           $wgResourceBasePath = '';
           $wgLoadScript = '/load.php';
           $wgDefaultSkin = 'vector-2022';
-          $wgArticlePath = '/index.php?title=$1';
+          $wgArticlePath = '/index.php/$1';
           PHP
 
       - name: Validar regras de negócio com PHPUnit e GeoData
