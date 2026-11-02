@@ -19,6 +19,8 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
     'http://127.0.0.1:8765/index.php?title=Especial:FormEdit/Artigo_com_geolocalização/Artigo_de_exemplo',
   )
 
+  await expect(page.getByRole('heading', { name: 'Sua história' })).toBeVisible()
+  await expect(page.getByText('Escreva sua história usando o editor visual abaixo.', { exact: false })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Localização (opcional)' })).toBeVisible()
   console.log('VisualEditor state', await page.evaluate(() => ({
     textarea: document.querySelector('#pf_free_text')?.className,
@@ -53,6 +55,9 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
     throw error
   }
   await expect(page.locator('.oo-ui-toolbar').first()).toBeVisible()
+  await expect(page.locator('.ve-ce-paragraphNode').first()).toBeVisible()
+  // A edição de texto precisa ser visual, não apenas uma caixa de wikitexto.
+  await expect(page.locator('.ve-ce-documentNode').first()).toHaveAttribute('contenteditable', 'true')
   await expect(page.locator('textarea.visualeditor')).toBeHidden()
   const optIn = page.locator('.pf-checkbox-input-container input[type="checkbox"]').first()
   await expect(optIn).not.toBeChecked()
@@ -93,9 +98,11 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   await advanced.locator('summary').click()
 
   // O usuário escreve no editor rico, sem digitar wikitexto.
-  const paragraph = richEditor.locator('.ve-ce-paragraphNode').first()
+  const paragraph = richEditor.locator('.ve-ce-paragraphNode').filter({
+    hasText: 'História preservada no formulário.',
+  }).first()
   await paragraph.click()
-  await page.keyboard.press('Home')
+  await page.keyboard.press('End')
   await page.keyboard.type('História escrita com editor visual. ')
   await expect(richEditor).toContainText('História escrita com editor visual.')
   await expect.poll(async () => page.evaluate(() => {

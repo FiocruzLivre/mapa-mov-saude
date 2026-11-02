@@ -3,6 +3,10 @@ Formulário opcional para escrever ou editar uma história, sem substituir o edi
 {{#forminput:form=Artigo com geolocalização|button text=Escrever sua história}}
 </noinclude><includeonly>
 {{{info|create title=Escrever sua história|edit title=Editar sua história}}}
+= Sua história =
+Escreva sua história usando o editor visual abaixo. Você pode formatar o texto, criar títulos, adicionar links e referências sem conhecer código wiki.
+{{{standard input|free text|rows=25|editor=visualeditor|class=toolbarOnTop}}}
+
 = Localização (opcional) =
 {{{for template|Geolocalização do artigo|label=Localização|maximum instances=1}}}
 {{{field|exibir_no_mapa|input type=checkbox|show on select=local-de-atuacao|label=Quero adicionar uma localização a esta história.}}}
@@ -12,8 +16,6 @@ Busque um município, bairro ou endereço e selecione o ponto no mapa. Você tam
 A localização poderá aparecer na história. Para entrar no mapa público da página inicial, ela precisa da aprovação de um moderador.
 </div>
 {{{end template}}}
-= Sua história =
-{{{standard input|free text|rows=25|editor=visualeditor|class=toolbarOnTop}}}
 {{{standard input|summary}}}
 {{{standard input|preview}}}
 {{{standard input|save}}}
