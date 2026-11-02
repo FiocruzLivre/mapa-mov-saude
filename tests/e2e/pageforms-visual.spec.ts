@@ -10,7 +10,7 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
     'http://127.0.0.1:8765/index.php?title=Especial:FormEdit/Artigo_com_geolocalização/Artigo_de_exemplo',
   )
 
-  await expect(page.getByRole('heading', { name: 'Local de atuação (opcional)' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Localização (opcional)' })).toBeVisible()
   const optIn = page.locator('.pf-checkbox-input-container input[type="checkbox"]').first()
   await expect(optIn).not.toBeChecked()
   await expect(page.locator('#local-de-atuacao')).toBeHidden()
@@ -20,7 +20,7 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   await expect(page.locator('#local-de-atuacao')).toBeVisible()
   // Page Forms exibe o bloco em duas animações; a captura não pode ocorrer com opacidade zero.
   await expect(page.locator('#local-de-atuacao')).toHaveCSS('opacity', '1')
-  await expect(page.getByText('Procure município, bairro ou CEP', { exact: false })).toBeVisible()
+  await expect(page.getByText('Busque um município, bairro ou endereço', { exact: false })).toBeVisible()
   const address = page.getByPlaceholder('Digite o endereço aqui')
   await expect(address).toBeVisible()
   await address.click()

@@ -44,12 +44,6 @@ function p.registrar(frame)
     end
     if not lat or not lon then return '' end
 
-    local precision = mw.text.trim(a.precisao or '')
-    local placeType = mw.text.trim(a.tipo_local or '')
-    if precision ~= 'municipio' and precision ~= 'aproximada' and precision ~= 'exata' then return '' end
-    if placeType ~= 'sede' and placeType ~= 'atuacao' and
-       placeType ~= 'evento' and placeType ~= 'referencia' then return '' end
-
     return frame:preprocess('{{#coordinates:' .. lat .. '|' .. lon .. '|primary}}')
 end
 

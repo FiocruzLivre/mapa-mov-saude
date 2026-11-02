@@ -3,15 +3,13 @@ Formulário opcional para escrever ou editar uma história, sem substituir o edi
 {{#forminput:form=Artigo com geolocalização|button text=Escrever sua história}}
 </noinclude><includeonly>
 {{{info|create title=Escrever sua história|edit title=Editar sua história}}}
-= Local de atuação (opcional) =
-{{{for template|Geolocalização do artigo|label=Local de atuação|maximum instances=1}}}
-{{{field|exibir_no_mapa|input type=checkbox|show on select=local-de-atuacao|label=Quero mostrar no mapa da página inicial onde este movimento ou ação atua.}}}
+= Localização (opcional) =
+{{{for template|Geolocalização do artigo|label=Localização|maximum instances=1}}}
+{{{field|exibir_no_mapa|input type=checkbox|show on select=local-de-atuacao|label=Quero adicionar uma localização a esta história.}}}
 <div id="local-de-atuacao">
-Procure município, bairro ou CEP e escolha um ponto que represente a área de atuação. Não informe endereço residencial.
+Busque um município, bairro ou endereço e selecione o ponto no mapa. Você também pode reposicionar o marcador. Evite indicar endereços residenciais ou locais privados.
 {{{field|localizacao|input type=leaflet|height=280|width=100%|starting bounds=-34,-74;6,-34}}}
-{{{field|precisao|hidden|default=aproximada}}}
-{{{field|tipo_local|hidden|default=atuacao}}}
-A localização escolhida será pública na história. O ponto na página inicial depende de aprovação.
+A localização poderá aparecer na história. Para entrar no mapa público da página inicial, ela precisa da aprovação de um moderador.
 </div>
 {{{end template}}}
 = Sua história =

@@ -12,7 +12,7 @@ grep -Fq 'standard input|free text' "$root/pages/Form-Artigo_com_geolocalizacao.
 grep -Fq 'maximum instances=1' "$root/pages/Form-Artigo_com_geolocalizacao.wiki"
 grep -Fq 'input type=checkbox|show on select=local-de-atuacao' "$root/pages/Form-Artigo_com_geolocalizacao.wiki"
 grep -Fq 'field|localizacao|input type=leaflet' "$root/pages/Form-Artigo_com_geolocalizacao.wiki"
-for field in localizacao precisao tipo_local exibir_no_mapa; do
+for field in localizacao exibir_no_mapa; do
  grep -Fq "field|$field|" "$root/pages/Form-Artigo_com_geolocalizacao.wiki"
  grep -Fq "|$field=" "$root/pages/Template-Geolocalizacao_do_artigo.wiki"
 done

@@ -1,8 +1,8 @@
-# Local de atuação (opcional)
+# Localização (opcional)
 
 O MapaMovSaúde chama os conteúdos de **histórias**, sobre movimentos sociais e suas ações. Escrever uma história não exige informar localização.
 
-Ao editar uma história, a pessoa pode marcar “Quero mostrar no mapa da página inicial onde este movimento ou ação atua” e escolher um ponto em um mapa Leaflet, buscando município, bairro ou CEP. Não é preciso informar latitude ou longitude.
+Ao editar uma história, a pessoa pode marcar “Quero adicionar uma localização a esta história”, buscar um local e posicionar o marcador no mapa Leaflet. Pode ajustar o ponto diretamente no mapa; não precisa conhecer nem digitar latitude e longitude.
 
 A localização registrada na história é pública. A inclusão do PIN no mapa da página inicial depende de aprovação editorial, que pertence à extensão [ArticleGeolocation](https://github.com/FiocruzLivre/mediawiki-extension-article-geolocation). Sem pedido explícito, o formulário não registra um ponto no GeoData.
 
