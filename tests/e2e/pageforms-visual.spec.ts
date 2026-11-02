@@ -1,6 +1,10 @@
 import { test, expect } from '@playwright/test'
 
 test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenadas', async ({ page }) => {
+  page.on('pageerror', (error) => console.log('JS pageerror:', error.message))
+  page.on('console', (message) => {
+    if (message.type() === 'error') console.log('JS console:', message.text())
+  })
   await page.goto('http://127.0.0.1:8765/index.php?title=Especial:Entrar')
   await page.locator('#wpName1').fill('editor_teste')
   await page.locator('#wpPassword1').fill('senha_de_teste')
@@ -11,6 +15,12 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   )
 
   await expect(page.getByRole('heading', { name: 'Localização (opcional)' })).toBeVisible()
+  console.log('VisualEditor state', await page.evaluate(() => ({
+    textarea: document.querySelector('#pf_free_text')?.className,
+    loaded: !!(window as any).jQuery?.fn?.applyVisualEditor,
+    module: (window as any).mw?.loader?.getState('ext.veforall.main'),
+    editorModule: (window as any).mw?.loader?.getState('ext.visualEditor.core'),
+  })))
   const richEditor = page.locator('.ve-area-wrapper .ve-ce-documentNode').first()
   await expect(richEditor).toBeVisible({ timeout: 20000 })
   await expect(page.locator('.ve-area-wrapper .oo-ui-toolbar')).toBeVisible()
