@@ -22,7 +22,21 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
     editorModule: (window as any).mw?.loader?.getState('ext.visualEditor.core'),
   })))
   const richEditor = page.locator('.ve-area-wrapper .ve-ce-documentNode').first()
-  await expect(richEditor).toBeVisible({ timeout: 20000 })
+  try {
+    await expect(richEditor).toBeVisible({ timeout: 20000 })
+  } catch (error) {
+    console.log('VisualEditor modules', await page.evaluate(() => {
+      const loader = (window as any).mw?.loader
+      return Object.fromEntries([
+        'ext.veforall.main', 'ext.veforall.core', 'ext.veforall.core.desktop',
+        'ext.visualEditor.core', 'ext.visualEditor.data',
+        'ext.visualEditor.mediawiki', 'ext.visualEditor.mwextensions.desktop',
+        'ext.visualEditor.mwimage', 'ext.visualEditor.mwlink',
+        'ext.visualEditor.mwtransclusion', 'ext.visualEditor.mwinit',
+      ].map((name) => [name, loader?.getState(name)]))
+    }))
+    throw error
+  }
   await expect(page.locator('.ve-area-wrapper .oo-ui-toolbar')).toBeVisible()
   await expect(page.locator('.ve-area-wrapper textarea.visualeditor')).toBeHidden()
   const optIn = page.locator('.pf-checkbox-input-container input[type="checkbox"]').first()
