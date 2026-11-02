@@ -18,6 +18,14 @@ A localização registrada na história é pública. A inclusão do PIN no mapa 
 | pages/Form-Artigo_com_geolocalizacao.wiki | Form:Artigo com geolocalização |
 | pages/MediaWiki-Common.js | MediaWiki:Common.js (ajusta o Leaflet quando o campo opcional é aberto) |
 
+## Ativação controlada
+
+O deploy deste repositório **não** publica automaticamente páginas de formulário, nem troca o fluxo existente de criação de histórias. Por padrão, `WG_MAPAMOV_GEOLOCATION_ENABLED=0`: o site continua usando a criação de artigos e o VisualEditor nativo do MediaWiki, sem exibir ou solicitar localização. O suporte VEForAll só é carregado quando a opção é ativada.
+
+Depois da autorização editorial, configure `WG_MAPAMOV_GEOLOCATION_ENABLED=1`, disponibilize a dependência VEForAll e publique as páginas listadas acima por meio do processo de implantação do MediaWiki. A página `MediaWiki:Common.js` contém **somente um trecho complementar** e não deve substituir o JavaScript já existente na wiki: faça a integração preservando os scripts atuais. Só então altere os links de criação para o formulário. Não basta alterar o valor da configuração caso as páginas ainda não tenham sido instaladas.
+
+Para desativar novamente, restaure o fluxo anterior de criação, deixe de disponibilizar o formulário aos usuários e configure `WG_MAPAMOV_GEOLOCATION_ENABLED=0`. A desativação não remove dados geográficos anteriormente publicados. A moderação do mapa é uma funcionalidade separada da extensão ArticleGeolocation.
+
 Para homologar, instalar as páginas em uma wiki descartável com Page Forms, GeoData e Scribunto; testar criação, edição, remoção de ponto e preservação do conteúdo da história. Não alterar artigos reais automaticamente.
 
 O campo Leaflet grava localizacao como “latitude, longitude”. O módulo Lua mantém leitura das antigas chaves latitude e longitude apenas por compatibilidade. A publicação no mapa principal é uma decisão separada, não uma propriedade do GeoData.

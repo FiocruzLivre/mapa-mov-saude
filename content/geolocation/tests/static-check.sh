@@ -16,4 +16,8 @@ for field in localizacao exibir_no_mapa; do
  grep -Fq "field|$field|" "$root/pages/Form-Artigo_com_geolocalizacao.wiki"
  grep -Fq "|$field=" "$root/pages/Template-Geolocalizacao_do_artigo.wiki"
 done
+settings="$root/../../mediawiki/LocalSettings.php"
+grep -Fq "WG_MAPAMOV_GEOLOCATION_ENABLED" "$settings"
+grep -Fq "wfLoadExtension( 'VisualEditor' );" "$settings"
+grep -Fq "if ( \$wgMapamovGeolocationEnabled )" "$settings"
 echo "Static checks passed"
