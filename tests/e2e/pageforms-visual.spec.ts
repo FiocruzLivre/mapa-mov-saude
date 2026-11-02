@@ -26,6 +26,12 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   await address.click()
   await address.fill('Rio de Janeiro')
   await expect(address).toHaveValue('Rio de Janeiro')
+  const technicalInput = page.locator('#local-de-atuacao input.pfCoordsInput')
+  const advanced = page.locator('#local-de-atuacao details.mapamov-location-advanced')
+  await expect(advanced).toBeVisible()
+  await expect(advanced).not.toHaveAttribute('open', '')
+  await expect(technicalInput).toBeHidden()
+  await expect(page.getByText('Nenhum ponto selecionado. Pesquise um local ou clique no mapa.')).toBeVisible()
   const map = page.locator('#local-de-atuacao .pfMapCanvas')
   await expect(map).toBeVisible()
   await expect(page.locator('#local-de-atuacao .leaflet-tile-pane')).toBeAttached()
@@ -34,8 +40,14 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
     .toBeGreaterThan(2)
 
   await map.click({ position: { x: 170, y: 110 } })
-  await expect(page.locator('#local-de-atuacao input.pfCoordsInput')).not.toHaveValue('')
+  await expect(technicalInput).not.toHaveValue('')
+  await expect(page.getByText('Ponto selecionado. Para mudar, clique no mapa ou arraste o marcador.')).toBeVisible()
+  await expect(technicalInput).toBeHidden()
   await page.screenshot({ path: test.info().outputPath('local-opcional-selecionado.png'), fullPage: true })
+  await advanced.locator('summary').click()
+  await expect(technicalInput).toBeVisible()
+  await expect(technicalInput).not.toHaveValue('')
+  await advanced.locator('summary').click()
 
   // Contrato do editor: o texto livre da história não pode desaparecer ao salvar a localização.
   const content = '== Trajetória ==\nHistória preservada no formulário.\n[[Categoria:Saúde]]'
