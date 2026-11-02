@@ -26,7 +26,7 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
     module: (window as any).mw?.loader?.getState('ext.veforall.main'),
     editorModule: (window as any).mw?.loader?.getState('ext.visualEditor.core'),
   })))
-  const richEditor = page.locator('.ve-area-wrapper .ve-ce-documentNode').first()
+  const richEditor = page.locator('.ve-ce-documentNode').first()
   try {
     await expect(richEditor).toBeVisible({ timeout: 20000 })
   } catch (error) {
@@ -52,8 +52,8 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
     }))
     throw error
   }
-  await expect(page.locator('.ve-area-wrapper .oo-ui-toolbar')).toBeVisible()
-  await expect(page.locator('.ve-area-wrapper textarea.visualeditor')).toBeHidden()
+  await expect(page.locator('.oo-ui-toolbar').first()).toBeVisible()
+  await expect(page.locator('textarea.visualeditor')).toBeHidden()
   const optIn = page.locator('.pf-checkbox-input-container input[type="checkbox"]').first()
   await expect(optIn).not.toBeChecked()
   await expect(page.locator('#local-de-atuacao')).toBeHidden()
@@ -115,6 +115,6 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   )
   await expect(optIn).toBeChecked()
   await expect(page.locator('#local-de-atuacao input.pfCoordsInput')).not.toHaveValue('')
-  await expect(page.locator('.ve-area-wrapper .ve-ce-documentNode').first())
+  await expect(page.locator('.ve-ce-documentNode').first())
     .toContainText('História escrita com editor visual.')
 })
