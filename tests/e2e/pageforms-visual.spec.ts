@@ -10,7 +10,7 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
     'http://127.0.0.1:8765/index.php?title=Especial:FormEdit/Artigo_com_geolocalização/Artigo_de_exemplo',
   )
 
-  await expect(page.getByRole('heading', { name: 'Sua história' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Sua história', exact: true })).toBeVisible()
   await expect(page.getByText('Escreva sua história usando o editor visual abaixo.', { exact: false })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Localização (opcional)' })).toBeVisible()
   const richEditor = page.locator('.ve-ce-documentNode').first()
