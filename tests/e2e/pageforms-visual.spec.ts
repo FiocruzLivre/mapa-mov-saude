@@ -11,7 +11,7 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   )
 
   await expect(page.getByRole('heading', { name: 'Sua história', exact: true })).toBeVisible()
-  await expect(page.getByText('Escreva sua história usando o editor visual abaixo.', { exact: false })).toBeVisible()
+  await expect(page.getByText('Escreva ou edite o texto abaixo.', { exact: false })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Localização', exact: true })).toBeVisible()
   const richEditor = page.locator('.ve-ce-documentNode').first()
   await expect(richEditor).toBeVisible({ timeout: 20000 })
