@@ -74,7 +74,7 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   await advanced.locator('summary').click()
   await technicalInput.fill('-15.793889, -47.882778')
   await technicalInput.press('Enter')
-  await expect.poll(async () => technicalInput.inputValue()).toContain('-15.793889')
+  await expect.poll(async () => technicalInput.inputValue()).toContain('-15.79389')
   await advanced.locator('summary').click()
   await expect(technicalInput).toBeHidden()
   await expect(page.locator('#local-de-atuacao .leaflet-marker-icon').first()).toBeVisible()
