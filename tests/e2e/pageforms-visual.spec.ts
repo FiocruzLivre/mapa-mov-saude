@@ -63,6 +63,8 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
     hasText: 'História preservada no formulário.',
   }).first()
   await paragraph.click()
+  await richEditor.focus()
+  await expect(page.locator('#pf_free_text')).toHaveClass(/ve-for-all-waiting-for-update/)
   await page.keyboard.press('End')
   await page.keyboard.insertText(' História escrita com editor visual.')
   await expect(richEditor).toContainText('História escrita com editor visual.')
