@@ -64,7 +64,7 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   }).first()
   await paragraph.click()
   await page.keyboard.press('End')
-  await page.keyboard.type(' História escrita com editor visual.', { delay: 80 })
+  await page.keyboard.insertText(' História escrita com editor visual.')
   await expect(richEditor).toContainText('História escrita com editor visual.')
   const save = page.locator('#wpSave button[type="submit"]')
   await expect(save).toBeEnabled()
