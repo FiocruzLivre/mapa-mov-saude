@@ -1,15 +1,13 @@
 # Dependências do MediaWiki — Mapa MovSaúde
 
-O `composer.json` deste diretório fornece as dependências específicas do site. O script `prepare-composer.sh` prepara sua integração ao Composer do MediaWiki em um ambiente de montagem ou homologação.
+Este diretório reúne as dependências e os ajustes específicos do MapaMovSaúde. Prepare e teste as alterações em homologação antes de implantá-las.
 
 ## Ajustes de dependências
 
-Dois patches identificados e verificados por SHA-256 em `patches.json` são necessários nas versões atuais:
+Os patches listados em `patches.json` corrigem dois problemas de compatibilidade:
 
-- **BootstrapComponents 6.1.1:** evita acessar `Parser::getOutput()` sem `ParserOutput` inicializado durante a conversão Parsoid/REST. [Problema upstream](https://github.com/oetterer/BootstrapComponents/issues/51).
-- **HitCounters 0.4:** corrige o prefixo PSR-4 para o namespace `HitCounters\\`.
-
-O Composer Patches v2 exige configuração no projeto Composer raiz; o `composer.local.json` isoladamente não basta.
+- **BootstrapComponents:** corrige a integração com VisualEditor/REST. [Problema upstream](https://github.com/oetterer/BootstrapComponents/issues/51).
+- **HitCounters:** corrige o carregamento de classes.
 
 ## Instalação em homologação
 
