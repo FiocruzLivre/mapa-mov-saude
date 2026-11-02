@@ -19,6 +19,7 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   await expect(richEditor).toHaveCSS('min-height', '300px')
   await expect(page.getByRole('heading', { name: 'Concluir', exact: true })).toBeVisible()
   await expect(page.getByRole('button', { name: 'Salvar história' })).toBeVisible()
+  await expect(page.getByText('Resumo da edição:')).toHaveCount(0)
   await expect(page.locator('#pfForm fieldset')).toHaveCount(0)
   await expect(page.locator('.ve-ce-paragraphNode').first()).toBeVisible()
   // A edição de texto precisa ser visual, não apenas uma caixa de wikitexto.
@@ -41,6 +42,7 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   await address.click()
   await address.fill('Rio de Janeiro')
   await expect(address).toHaveValue('Rio de Janeiro')
+  await address.clear()
   const technicalInput = page.locator('#local-de-atuacao input.pfCoordsInput')
   const advanced = page.locator('#local-de-atuacao details.mapamov-location-advanced')
   await expect(advanced.locator('summary')).toHaveText('Ajustar o ponto manualmente (avançado)')
@@ -55,7 +57,7 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   await expect.poll(async () => page.locator('#local-de-atuacao .leaflet-tile-loaded').count(), { timeout: 15000 })
     .toBeGreaterThan(2)
 
-  await map.click({ position: { x: 170, y: 110 } })
+  await map.click({ position: { x: 440, y: 175 } })
   await expect(technicalInput).not.toHaveValue('')
   await expect(page.getByText('Ponto selecionado. Para mudar, clique no mapa ou arraste o marcador.')).toBeVisible()
   await expect(technicalInput).toBeHidden()
