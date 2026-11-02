@@ -1,31 +1,20 @@
 <noinclude>
-Formulário opcional para criar e editar artigos, sem substituir VisualEditor.
-{{#forminput:form=Artigo com geolocalização|button text=Criar artigo}}
+Formulário opcional para escrever ou editar uma história, sem substituir o editor visual.
+{{#forminput:form=Artigo com geolocalização|button text=Escrever sua história}}
 </noinclude><includeonly>
-{{{info|create title=Criar artigo|edit title=Editar artigo e localização}}}
-= Localização geográfica (opcional) =
-Informe um ponto publicável, não um endereço privado. Use graus decimais com ponto. Apague as coordenadas para remover a posição.
-{{{for template|Geolocalização do artigo|label=Localização única|maximum instances=1}}}
-{| class="formtable"
-! Latitude
-| {{{field|latitude|input type=text|size=24|placeholder=-3.68274}}}
-|-
-! Longitude
-| {{{field|longitude|input type=text|size=24|placeholder=-40.3512}}}
-|-
-! Precisão
-| {{{field|precisao|input type=dropdown|values=municipio,aproximada,exata}}}
-|-
-! Tipo do local
-| {{{field|tipo_local|input type=dropdown|values=sede,atuacao,evento,referencia}}}
-|-
-! Publicar a localização?
-| {{{field|exibir_no_mapa|input type=dropdown|values=nao,sim|default=nao}}}
-|}
-'''Aviso:''' solicitar publicação não equivale a aprovação editorial para inclusão na página inicial.
+{{{info|create title=Escrever sua história|edit title=Editar sua história}}}
+= Local de atuação (opcional) =
+{{{for template|Geolocalização do artigo|label=Local de atuação|maximum instances=1}}}
+{{{field|exibir_no_mapa|input type=checkbox|show on select=local-de-atuacao|label=Quero mostrar no mapa da página inicial onde este movimento ou ação atua.}}}
+<div id="local-de-atuacao">
+Procure município, bairro ou CEP e escolha um ponto que represente a área de atuação. Não informe endereço residencial.
+{{{field|localizacao|input type=leaflet|height=280|width=100%|starting bounds=-34,-74;6,-34}}}
+{{{field|precisao|hidden|default=aproximada}}}
+{{{field|tipo_local|hidden|default=atuacao}}}
+A localização escolhida será pública na história. O ponto na página inicial depende de aprovação.
+</div>
 {{{end template}}}
-= Conteúdo livre do artigo =
-Preserve referências, categorias, predefinições e demais marcações.
+= Sua história =
 {{{standard input|free text|rows=25}}}
 {{{standard input|summary}}}
 {{{standard input|preview}}}

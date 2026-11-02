@@ -1,10 +1,9 @@
 {
-  "name": "mapamovsaude-pageforms-screenshots",
+  "name": "mapamovsaude-pageforms-tests",
   "private": true,
-  "description": "Capture real MediaWiki Page Forms UI for review",
+  "description": "Browser contract tests for the optional location field in Page Forms",
   "scripts": {
-    "screenshots:check": "playwright test tests/e2e/pageforms-visual.spec.ts",
-    "screenshots:update": "playwright test tests/e2e/pageforms-visual.spec.ts --update-snapshots"
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0"

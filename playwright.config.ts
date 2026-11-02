@@ -10,13 +10,6 @@ export default defineConfig({
   retries: 0,
   workers: 1,
   timeout: 60_000,
-  snapshotPathTemplate: 'img/screenshots/{arg}.png',
-  expect: {
-    toHaveScreenshot: {
-      animations: 'disabled',
-      maxDiffPixelRatio: 0.001,
-    },
-  },
   use: {
     browserName: 'chromium',
     locale: 'pt-BR',

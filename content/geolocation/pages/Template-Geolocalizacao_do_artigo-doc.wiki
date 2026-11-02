@@ -1,15 +1,10 @@
-Documentação da [[Predefinição:Geolocalização do artigo]].
+<noinclude>Uso opcional para mostrar no mapa da página inicial o local de atuação de um movimento ou ação. Os dados incluídos na história são públicos; a exibição do PIN exige aprovação editorial.</noinclude>
 <pre>
 {{Geolocalização do artigo
-|latitude=-3.68274
-|longitude=-40.3512
-|precisao=municipio
+|localizacao=-3.68274, -40.3512
+|precisao=aproximada
 |tipo_local=atuacao
 |exibir_no_mapa=sim
 }}
 </pre>
-Latitude: -90 a 90; longitude: -180 a 180. Casas decimais separadas por ponto.
-Precisao: municipio, aproximada, exata. Tipo local: sede, atuacao, evento, referencia.
-exibir_no_mapa: sim ou nao.
-Dados inválidos, incompletos ou não públicos não geram coordenada.
-O valor sim registra intenção de publicação da posição no GeoData; não significa aprovação editorial para o mapa inicial.
+Para retirar o ponto, desmarque a opção de exibição e remova a localização no formulário. A predefinição ainda aceita os campos antigos latitude e longitude para compatibilidade, mas não devem ser usados junto com localizacao.

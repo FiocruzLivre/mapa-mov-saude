@@ -1,4 +1,5 @@
 <includeonly>{{#invoke:Geolocalizacao do artigo|registrar
+|localizacao={{{localizacao|}}}
 |latitude={{{latitude|}}}
 |longitude={{{longitude|}}}
 |precisao={{{precisao|}}}

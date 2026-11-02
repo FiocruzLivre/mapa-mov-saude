@@ -1,5 +1,5 @@
--- Registra uma posição somente quando o autor solicita exibição.
--- A aprovação editorial da publicação GeoJSON é independente.
+-- Publica no GeoData somente a localização que o editor solicitou.
+-- A aprovação para o mapa da página inicial é independente.
 local p = {}
 
 local function decimal(value, minimum, maximum)
@@ -22,10 +22,26 @@ end
 
 function p.registrar(frame)
     local a = frame.args
-    if mw.text.trim(a.exibir_no_mapa or '') ~= 'sim' then return '' end
+    local request = mw.text.trim(a.exibir_no_mapa or ''):lower()
+    if request ~= 'sim' and request ~= 'yes' and request ~= 'true' and request ~= '1' then
+        return ''
+    end
 
-    local lat = decimal(a.latitude, -90, 90)
-    local lon = decimal(a.longitude, -180, 180)
+    local location = mw.text.trim(a.localizacao or '')
+    local lat, lon
+    if location ~= '' then
+        if mw.text.trim(a.latitude or '') ~= '' or mw.text.trim(a.longitude or '') ~= '' then
+            return ''
+        end
+        local parts = mw.text.split(location, ',', true)
+        if #parts ~= 2 then return '' end
+        lat = decimal(parts[1], -90, 90)
+        lon = decimal(parts[2], -180, 180)
+    else
+        -- Compatibilidade com pontos legados já informados em dois campos.
+        lat = decimal(a.latitude, -90, 90)
+        lon = decimal(a.longitude, -180, 180)
+    end
     if not lat or not lon then return '' end
 
     local precision = mw.text.trim(a.precisao or '')

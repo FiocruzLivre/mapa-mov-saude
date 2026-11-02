@@ -78,6 +78,32 @@ class GeolocalizacaoFormularioTest extends MediaWikiIntegrationTestCase {
         yield 'tipo vazio' => [ 'municipio', '' ];
     }
 
+    /** @dataProvider mapSelections */
+    public function testOptionalMapLocationUsesLeafletCoordinates(
+        string $location, string $request, bool $expected
+    ): void {
+        $page = $this->getNonexistingTestPage();
+        $markup = '{{Geolocalização do artigo|localizacao=' . $location .
+            '|precisao=aproximada|tipo_local=atuacao|exibir_no_mapa=' . $request . '}}';
+        $this->editPage( $page, $markup );
+        $this->runJobs();
+        $coords = GeoData::getAllCoordinates( $page->getId(), [ 'gt_primary' => 1 ], DB_PRIMARY );
+        $this->assertCount( $expected ? 1 : 0, $coords );
+        if ( $expected ) {
+            $this->assertSame( -3.68274, $coords[0]->lat );
+            $this->assertSame( -40.3512, $coords[0]->lon );
+        }
+    }
+
+    public static function mapSelections(): iterable {
+        yield 'não solicitada' => [ '', 'nao', false ];
+        yield 'local escolhido mas opção desmarcada' => [ '-3.68274, -40.3512', 'nao', false ];
+        yield 'opção marcada no Page Forms' => [ '-3.68274, -40.3512', 'Sim', true ];
+        yield 'coordenada inválida' => [ '91, -40', 'sim', false ];
+        yield 'valor não numérico' => [ 'bairro, cidade', 'sim', false ];
+        yield 'valores conflitantes' => [ '-3.68274, -40.3512|latitude=-3', 'sim', false ];
+    }
+
     public function testRemovalOfGeolocationRemovesGeoDataCoordinates(): void {
         $page = $this->getNonexistingTestPage();
         $first = '{{Geolocalização do artigo|latitude=-3.68274|longitude=-40.3512'
