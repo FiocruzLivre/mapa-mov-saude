@@ -30,7 +30,8 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   await expect(page.locator('#local-de-atuacao')).toBeHidden()
   await expect(page.locator('#pfForm .pfMapCanvas')).toBeHidden()
   await expect(page.getByText('Adicionar uma localização a esta história (opcional).')).toBeVisible()
-  await page.screenshot({ path: test.info().outputPath('local-opcional-fechado.png'), fullPage: true })
+  // Capture somente o conteúdo real da página; o cabeçalho do ambiente de teste não é parte do formulário.
+  await page.locator('main').screenshot({ path: test.info().outputPath('local-opcional-fechado.png') })
 
   await optIn.check()
   await expect(page.locator('#local-de-atuacao')).toBeVisible()
@@ -59,14 +60,19 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   await expect.poll(async () => page.locator('#local-de-atuacao .leaflet-tile-loaded').count(), { timeout: 15000 })
     .toBeGreaterThan(2)
 
-  await map.click({ position: { x: 440, y: 175 } })
+  // Clique em terra no interior do Brasil, não no oceano Atlântico.
+  await map.click({ position: { x: 295, y: 142 } })
   await expect(technicalInput).not.toHaveValue('')
+  const [latitude, longitude] = (await technicalInput.inputValue()).split(/[,;]/).map(Number)
+  expect(latitude, 'A latitude deve estar dentro do Brasil').toBeGreaterThan(-35)
+  expect(latitude).toBeLessThan(6)
+  expect(longitude, 'A longitude deve estar dentro do Brasil').toBeGreaterThan(-75)
+  expect(longitude).toBeLessThan(-34)
   await expect(page.getByText('Ponto selecionado. Para mudar, clique no mapa ou arraste o marcador.')).toBeVisible()
   await expect(technicalInput).toBeHidden()
-  await page.screenshot({ path: test.info().outputPath('local-opcional-selecionado.png'), fullPage: true })
+  await page.locator('main').screenshot({ path: test.info().outputPath('local-opcional-selecionado.png') })
   await optIn.uncheck()
   await expect(page.locator('#local-de-atuacao')).toBeHidden()
-  await page.screenshot({ path: test.info().outputPath('local-opcional-recolhido.png'), fullPage: true })
   await optIn.check()
   await expect(page.locator('#local-de-atuacao')).toBeVisible()
   await advanced.locator('summary').click()
