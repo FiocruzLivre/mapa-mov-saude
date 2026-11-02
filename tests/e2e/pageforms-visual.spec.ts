@@ -2,6 +2,11 @@ import { test, expect } from '@playwright/test'
 
 test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenadas', async ({ page }) => {
   page.on('pageerror', (error) => console.log('JS pageerror:', error.message))
+  page.on('response', async (response) => {
+    if (response.url().includes('veforall-parsoid-utils')) {
+      console.log('Parsoid response', response.status(), (await response.text()).slice(0, 450))
+    }
+  })
   page.on('console', (message) => {
     if (message.type() === 'error') console.log('JS console:', message.text())
   })
@@ -26,14 +31,24 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
     await expect(richEditor).toBeVisible({ timeout: 20000 })
   } catch (error) {
     console.log('VisualEditor modules', await page.evaluate(() => {
+      const jq = (window as any).jQuery
       const loader = (window as any).mw?.loader
-      return Object.fromEntries([
-        'ext.veforall.main', 'ext.veforall.core', 'ext.veforall.core.desktop',
-        'ext.visualEditor.core', 'ext.visualEditor.data',
-        'ext.visualEditor.mediawiki', 'ext.visualEditor.mwextensions.desktop',
-        'ext.visualEditor.mwimage', 'ext.visualEditor.mwlink',
-        'ext.visualEditor.mwtransclusion', 'ext.visualEditor.mwinit',
-      ].map((name) => [name, loader?.getState(name)]))
+      const instances = jq?.fn?.getVEInstances ? jq([]).getVEInstances() : []
+      return {
+        apply: !!jq?.fn?.applyVisualEditor,
+        instances: instances.map((instance: any) => ({
+          hasTarget: !!instance.target,
+          disabled: instance.$node?.prop('disabled'),
+        })),
+        textarea: document.querySelector('#pf_free_text')?.className,
+        status: Object.fromEntries([
+          'ext.veforall.main', 'ext.veforall.core', 'ext.veforall.core.desktop',
+          'ext.visualEditor.core', 'ext.visualEditor.data',
+          'ext.visualEditor.mediawiki', 'ext.visualEditor.mwextensions.desktop',
+          'ext.visualEditor.mwimage', 'ext.visualEditor.mwlink',
+          'ext.visualEditor.mwtransclusion', 'ext.visualEditor.mwinit',
+        ].map((name) => [name, loader?.getState(name)])),
+      }
     }))
     throw error
   }
