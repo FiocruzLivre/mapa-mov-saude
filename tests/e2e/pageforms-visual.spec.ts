@@ -94,14 +94,25 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
 
   // O usuário escreve no editor rico, sem digitar wikitexto.
   await richEditor.click()
-  await page.keyboard.press('End')
-  await page.keyboard.type(' História escrita com editor visual.')
-  await page.locator('#wpSave').click()
+  await page.keyboard.press('ControlOrMeta+End')
+  await page.keyboard.press('Enter')
+  await page.keyboard.type('História escrita com editor visual.')
+  await expect(richEditor).toContainText('História escrita com editor visual.')
+  const save = page.locator('#wpSave button[type="submit"]')
+  await expect(save).toBeEnabled()
+  await save.click()
 
-  const response = await page.request.get(
-    'http://127.0.0.1:8765/api.php?action=query&prop=revisions&rvslots=main&rvprop=content&formatversion=2&titles=Artigo_de_exemplo&format=json',
-  )
-  expect(response.ok()).toBeTruthy()
+  // O VEForAll converte o conteúdo para wikitexto antes de finalizar o envio.
+  const contentUrl =
+    'http://127.0.0.1:8765/api.php?action=query&prop=revisions&rvslots=main&rvprop=content&formatversion=2&titles=Artigo_de_exemplo&format=json'
+  await expect.poll(async () => {
+    const response = await page.request.get(contentUrl)
+    if (!response.ok()) return false
+    const data = await response.json()
+    const text = data.query.pages[0]?.revisions?.[0]?.slots?.main?.content ?? ''
+    return text.includes('História escrita com editor visual.')
+  }, { timeout: 30000 }).toBe(true)
+  const response = await page.request.get(contentUrl)
   const data = await response.json()
   const wikiText = data.query.pages[0].revisions[0].slots.main.content as string
   expect(wikiText).toContain('História preservada no formulário.')
