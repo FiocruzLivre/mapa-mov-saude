@@ -18,6 +18,8 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
 
   await optIn.check()
   await expect(page.locator('#local-de-atuacao')).toBeVisible()
+  // Page Forms exibe o bloco em duas animações; a captura não pode ocorrer com opacidade zero.
+  await expect(page.locator('#local-de-atuacao')).toHaveCSS('opacity', '1')
   await expect(page.getByText('Procure município, bairro ou CEP', { exact: false })).toBeVisible()
   const address = page.getByPlaceholder('Digite o endereço aqui')
   await expect(address).toBeVisible()
@@ -27,6 +29,7 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   const map = page.locator('#local-de-atuacao .pfMapCanvas')
   await expect(map).toBeVisible()
   await expect(page.locator('#local-de-atuacao .leaflet-tile-pane')).toBeAttached()
+  await expect(page.locator('#local-de-atuacao .leaflet-tile-loaded').first()).toBeVisible({ timeout: 15000 })
 
   await map.click({ position: { x: 170, y: 110 } })
   await expect(page.locator('#local-de-atuacao input.pfCoordsInput')).not.toHaveValue('')
