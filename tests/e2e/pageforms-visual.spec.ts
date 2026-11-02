@@ -1,15 +1,6 @@
 import { test, expect } from '@playwright/test'
 
 test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenadas', async ({ page }) => {
-  page.on('pageerror', (error) => console.log('JS pageerror:', error.message))
-  page.on('response', async (response) => {
-    if (response.url().includes('veforall-parsoid-utils')) {
-      console.log('Parsoid response', response.status(), (await response.text()).slice(0, 450))
-    }
-  })
-  page.on('console', (message) => {
-    if (message.type() === 'error') console.log('JS console:', message.text())
-  })
   await page.goto('http://127.0.0.1:8765/index.php?title=Especial:Entrar')
   await page.locator('#wpName1').fill('editor_teste')
   await page.locator('#wpPassword1').fill('senha_de_teste')
@@ -22,38 +13,8 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   await expect(page.getByRole('heading', { name: 'Sua história' })).toBeVisible()
   await expect(page.getByText('Escreva sua história usando o editor visual abaixo.', { exact: false })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Localização (opcional)' })).toBeVisible()
-  console.log('VisualEditor state', await page.evaluate(() => ({
-    textarea: document.querySelector('#pf_free_text')?.className,
-    loaded: !!(window as any).jQuery?.fn?.applyVisualEditor,
-    module: (window as any).mw?.loader?.getState('ext.veforall.main'),
-    editorModule: (window as any).mw?.loader?.getState('ext.visualEditor.core'),
-  })))
   const richEditor = page.locator('.ve-ce-documentNode').first()
-  try {
-    await expect(richEditor).toBeVisible({ timeout: 20000 })
-  } catch (error) {
-    console.log('VisualEditor modules', await page.evaluate(() => {
-      const jq = (window as any).jQuery
-      const loader = (window as any).mw?.loader
-      const instances = jq?.fn?.getVEInstances ? jq([]).getVEInstances() : []
-      return {
-        apply: !!jq?.fn?.applyVisualEditor,
-        instances: instances.map((instance: any) => ({
-          hasTarget: !!instance.target,
-          disabled: instance.$node?.prop('disabled'),
-        })),
-        textarea: document.querySelector('#pf_free_text')?.className,
-        status: Object.fromEntries([
-          'ext.veforall.main', 'ext.veforall.core', 'ext.veforall.core.desktop',
-          'ext.visualEditor.core', 'ext.visualEditor.data',
-          'ext.visualEditor.mediawiki', 'ext.visualEditor.mwextensions.desktop',
-          'ext.visualEditor.mwimage', 'ext.visualEditor.mwlink',
-          'ext.visualEditor.mwtransclusion', 'ext.visualEditor.mwinit',
-        ].map((name) => [name, loader?.getState(name)])),
-      }
-    }))
-    throw error
-  }
+  await expect(richEditor).toBeVisible({ timeout: 20000 })
   await expect(page.locator('.oo-ui-toolbar').first()).toBeVisible()
   await expect(page.locator('.ve-ce-paragraphNode').first()).toBeVisible()
   // A edição de texto precisa ser visual, não apenas uma caixa de wikitexto.
@@ -103,7 +64,7 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   }).first()
   await paragraph.click()
   await page.keyboard.press('End')
-  await page.keyboard.type('História escrita com editor visual. ')
+  await page.keyboard.type(' História escrita com editor visual.', { delay: 80 })
   await expect(richEditor).toContainText('História escrita com editor visual.')
   await expect.poll(async () => page.evaluate(() => {
     const instances = (window as any).jQuery([]).getVEInstances()
@@ -112,9 +73,6 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   const save = page.locator('#wpSave button[type="submit"]')
   await expect(save).toBeEnabled()
   await save.click()
-  console.log('Save URL', page.url())
-  console.log('Save notice', (await page.locator('body').innerText()).slice(-700))
-  console.log('Save payload', await page.locator('#pf_free_text').inputValue().catch(() => 'No textarea'))
 
   // O VEForAll converte o conteúdo para wikitexto antes de finalizar o envio.
   const contentUrl =
