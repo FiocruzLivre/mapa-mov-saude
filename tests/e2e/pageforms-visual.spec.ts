@@ -38,4 +38,13 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   expect(wikiText).toContain('História preservada no formulário.')
   expect(wikiText).toContain('[[Categoria:Saúde]]')
   expect(wikiText).toContain('localizacao=')
+
+  // Reabrir a história não pode perder o local nem o texto já publicado.
+  await page.goto(
+    'http://127.0.0.1:8765/index.php?title=Especial:FormEdit/Artigo_com_geolocalização/Artigo_de_exemplo',
+  )
+  await expect(optIn).toBeChecked()
+  await expect(page.locator('#local-de-atuacao input.pfCoordsInput')).not.toHaveValue('')
+  await expect(page.locator('textarea[name*="free_text"]').first())
+    .toHaveValue(/História preservada no formulário/)
 })
