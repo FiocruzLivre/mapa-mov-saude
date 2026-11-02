@@ -14,6 +14,7 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   const optIn = page.locator('.pf-checkbox-input-container input[type="checkbox"]').first()
   await expect(optIn).not.toBeChecked()
   await expect(page.locator('#local-de-atuacao')).toBeHidden()
+  await page.screenshot({ path: test.info().outputPath('local-opcional-fechado.png'), fullPage: true })
 
   await optIn.check()
   await expect(page.locator('#local-de-atuacao')).toBeVisible()
@@ -23,6 +24,7 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
 
   await map.click({ position: { x: 170, y: 110 } })
   await expect(page.locator('#local-de-atuacao input.pfCoordsInput')).not.toHaveValue('')
+  await page.screenshot({ path: test.info().outputPath('local-opcional-selecionado.png'), fullPage: true })
 
   // Contrato do editor: o texto livre da história não pode desaparecer ao salvar a localização.
   const content = '== Trajetória ==\nHistória preservada no formulário.\n[[Categoria:Saúde]]'
