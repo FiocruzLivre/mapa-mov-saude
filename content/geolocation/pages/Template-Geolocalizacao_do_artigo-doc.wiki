@@ -1,0 +1,10 @@
+<noinclude>Uso opcional para mostrar no mapa da página inicial o local de atuação de um movimento ou ação. Os dados incluídos na história são públicos; a exibição do PIN exige aprovação editorial.</noinclude>
+<pre>
+{{Geolocalização do artigo
+|localizacao=-3.68274, -40.3512
+|precisao=aproximada
+|tipo_local=atuacao
+|exibir_no_mapa=sim
+}}
+</pre>
+Para retirar o ponto, desmarque a opção de exibição e remova a localização no formulário. A predefinição ainda aceita os campos antigos latitude e longitude para compatibilidade, mas não devem ser usados junto com localizacao.

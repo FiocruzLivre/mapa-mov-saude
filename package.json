@@ -1,0 +1,11 @@
+{
+  "name": "mapamovsaude-pageforms-tests",
+  "private": true,
+  "description": "Browser contract tests for the optional location field in Page Forms",
+  "scripts": {
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}

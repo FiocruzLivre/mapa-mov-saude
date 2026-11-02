@@ -204,6 +204,14 @@ $wgRestrictDisplayTitle = false;
 
 # Visual Editor
 wfLoadExtension( 'VisualEditor' );
+// O editor nativo permanece ativo. O novo formulario geografico e opcional.
+// A ativacao exige tambem publicar as paginas do formulario na wiki.
+$wgMapamovGeolocationEnabled = filter_var(
+	getenv( 'WG_MAPAMOV_GEOLOCATION_ENABLED' ) ?: '0', FILTER_VALIDATE_BOOLEAN
+);
+if ( $wgMapamovGeolocationEnabled ) {
+	wfLoadExtension( 'VEForAll' );
+}
 $wgGroupPermissions['user']['writeapi'] = true;
 $wgVisualEditorSupportedSkins = ['*'];
 $wgUsePathInfo = true;
