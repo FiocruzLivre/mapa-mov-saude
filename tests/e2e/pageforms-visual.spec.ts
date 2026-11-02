@@ -39,6 +39,8 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   await expect(page.getByText('Procure um bairro ou município', { exact: false })).toBeVisible()
   const address = page.getByPlaceholder('Digite o endereço aqui')
   await expect(address).toBeVisible()
+  await expect(page.getByText('Buscar no mapa', { exact: true })).toBeVisible()
+  await expect(page.getByText('Calcular coordenadas utilizando o endereço')).toHaveCount(0)
   await address.click()
   await address.fill('Rio de Janeiro')
   await expect(address).toHaveValue('Rio de Janeiro')
