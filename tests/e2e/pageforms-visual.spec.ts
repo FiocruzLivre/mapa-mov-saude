@@ -10,7 +10,7 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
     'http://127.0.0.1:8765/index.php?title=Especial:FormEdit/Artigo_com_geolocalização/Artigo_de_exemplo',
   )
 
-  await expect(page.getByText('Local de atuação (opcional)')).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Local de atuação (opcional)' })).toBeVisible()
   const optIn = page.locator('.pf-checkbox-input-container input[type="checkbox"]').first()
   await expect(optIn).not.toBeChecked()
   await expect(page.locator('#local-de-atuacao')).toBeHidden()
