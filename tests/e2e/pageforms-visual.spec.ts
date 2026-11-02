@@ -23,4 +23,19 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
 
   await map.click({ position: { x: 170, y: 110 } })
   await expect(page.locator('#local-de-atuacao input.pfCoordsInput')).not.toHaveValue('')
+
+  // Contrato do editor: o texto livre da história não pode desaparecer ao salvar a localização.
+  const content = '== Trajetória ==\nHistória preservada no formulário.\n[[Categoria:Saúde]]'
+  await page.locator('textarea[name*="free_text"]').first().fill(content)
+  await page.locator('#wpSave').click()
+
+  const response = await page.request.get(
+    'http://127.0.0.1:8765/api.php?action=query&prop=revisions&rvslots=main&rvprop=content&formatversion=2&titles=Artigo_de_exemplo&format=json',
+  )
+  expect(response.ok()).toBeTruthy()
+  const data = await response.json()
+  const wikiText = data.query.pages[0].revisions[0].slots.main.content as string
+  expect(wikiText).toContain('História preservada no formulário.')
+  expect(wikiText).toContain('[[Categoria:Saúde]]')
+  expect(wikiText).toContain('localizacao=')
 })
