@@ -41,11 +41,16 @@ jobs:
           set -euo pipefail
           git clone --depth 1 --branch 1.46.2 \
             https://gerrit.wikimedia.org/r/mediawiki/core.git "$RUNNER_TEMP/mediawiki"
-          for extension in GeoData Scribunto PageForms VEForAll VisualEditor; do
+          for extension in GeoData Scribunto PageForms VEForAll; do
             git clone --depth 1 --branch REL1_46 \
               "https://gerrit.wikimedia.org/r/mediawiki/extensions/$extension.git" \
               "$RUNNER_TEMP/mediawiki/extensions/$extension"
           done
+          git clone --depth 1 --branch REL1_46 \
+            https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor.git \
+            "$RUNNER_TEMP/mediawiki/extensions/VisualEditor"
+          git -C "$RUNNER_TEMP/mediawiki/extensions/VisualEditor" \
+            submodule update --init --recursive --depth 1
           git clone --depth 1 --branch REL1_46 \
             https://gerrit.wikimedia.org/r/mediawiki/skins/Vector.git \
             "$RUNNER_TEMP/mediawiki/skins/Vector"
