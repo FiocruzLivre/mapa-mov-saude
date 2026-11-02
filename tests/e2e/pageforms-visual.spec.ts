@@ -101,6 +101,9 @@ test('localização é opcional e a pessoa escolhe o ponto sem digitar coordenad
   const save = page.locator('#wpSave button[type="submit"]')
   await expect(save).toBeEnabled()
   await save.click()
+  console.log('Save URL', page.url())
+  console.log('Save notice', (await page.locator('body').innerText()).slice(-700))
+  console.log('Save payload', await page.locator('#pf_free_text').inputValue().catch(() => 'No textarea'))
 
   // O VEForAll converte o conteúdo para wikitexto antes de finalizar o envio.
   const contentUrl =
