@@ -14,6 +14,21 @@ $( function () {
         return;
     }
 
+    // A tradução padrão do Page Forms expõe jargão geográfico desnecessário.
+    section.querySelectorAll( 'button, a, input[type="button"]' ).forEach( (control) => {
+        if ( control.tagName === 'INPUT' ) {
+            if ( control.value.includes( 'Calcular coordenadas utilizando o endereço' ) ) {
+                control.value = 'Buscar no mapa';
+            }
+        } else {
+            control.childNodes.forEach( (node) => {
+                if ( node.nodeType === Node.TEXT_NODE && node.textContent.includes( 'Calcular coordenadas utilizando o endereço' ) ) {
+                    node.textContent = node.textContent.replace( 'Calcular coordenadas utilizando o endereço', 'Buscar no mapa' );
+                }
+            } );
+        }
+    } );
+
     // O Page Forms usa este input para persistir o ponto. Mantê-lo no
     // formulário, mas fora do caminho principal de quem usa o mapa.
     const inputWrapper = coordinates.parentElement;

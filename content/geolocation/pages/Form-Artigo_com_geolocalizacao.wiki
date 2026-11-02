@@ -2,6 +2,7 @@
 Formulário opcional para escrever ou editar uma história, sem substituir o editor visual.
 {{#forminput:form=Artigo com geolocalização|button text=Escrever sua história}}
 </noinclude><includeonly>
+__NOEDITSECTION__
 {{{info|create title=Escrever sua história|edit title=Editar sua história}}}
 = Sua história =
 Escreva ou edite o texto abaixo. Use a barra de ferramentas para criar títulos, destacar palavras e inserir links.
