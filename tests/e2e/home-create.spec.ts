@@ -11,7 +11,7 @@ test('homepage participation entry reaches the visual story form', async ({ page
   await expect(create).toBeVisible()
   await page.locator('main').screenshot({ path: test.info().outputPath('home-escrever-historia.png') })
   await create.click()
-  await expect(page.getByRole('heading', { name: 'Criar Artigo com geolocalização' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Adicionar página' })).toBeVisible()
   const titleInput = page.locator('input[name="page_name"]')
   await expect(titleInput).toBeVisible()
   await titleInput.fill('História de validação da interface')
