@@ -35,6 +35,12 @@ jobs:
           coverage: none
           tools: composer:v2
 
+      - name: Testar bloqueio de publicacao sem moderacao
+        run: |
+          env -u WG_MAPAMOV_EDITORIAL_MODERATION_ENABLED php test/security/editorial-permissions.php off
+          WG_MAPAMOV_EDITORIAL_MODERATION_ENABLED=0 php test/security/editorial-permissions.php off
+          WG_MAPAMOV_EDITORIAL_MODERATION_ENABLED=1 php test/security/editorial-permissions.php on
+
       - name: Preparar MediaWiki e extensões nativas
         shell: bash
         run: |

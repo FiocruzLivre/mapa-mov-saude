@@ -483,4 +483,23 @@ if ( $wgMapamovEditorialModeration ) {
     $wgGroupPermissions['reviewer']['moderation'] = true;
     // Email for queued edits is sent via ArticleGeolocation's Echo integration.
     $wgModerationNotificationEnable = false;
+} else {
+    // Fail closed if the editorial moderation extension is not enabled.
+    // Sysops may still repair the installation or perform initial setup.
+    $publicationRights = [
+        'edit', 'createpage', 'createtalk', 'upload', 'reupload',
+        'reupload-shared', 'move', 'move-subpages', 'movefile',
+    ];
+    foreach ( $wgGroupPermissions as $group => &$rights ) {
+        if ( $group === 'sysop' ) {
+            continue;
+        }
+        foreach ( $publicationRights as $right ) {
+            $rights[$right] = false;
+        }
+    }
+    unset( $rights );
+    foreach ( $publicationRights as $right ) {
+        $wgGroupPermissions['sysop'][$right] = true;
+    }
 }
