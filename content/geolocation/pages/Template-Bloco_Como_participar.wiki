@@ -3,5 +3,5 @@
 [[Arquivo:53021761462_2f86c81520_c.jpg|400px|center|class=img-fluid|alt=Logo do mapa colaborativo dos movimentos sociais em saúde. Mapa do Brasil colorido|link=Ajuda:Como_participar|Como participar]]<div class="card-body"><h5 class="card-title">Você pode colaborar com o crescimento do Mapa</h5><p class="card-text">Atualmente temos {{NUMBEROFUSERS}} colaboradores cadastrados. Deseja colaborar escrevendo novas páginas ou contribuindo para as páginas? Você pode colaborar:</p>
 <div class="btn">{{Botão|color=blue|link=Especial:Criar_conta|name=Criar conta}}</div>
 <div class="btn">{{Botão|color=blue|link=Especial:Autenticar-se|name=Entrar}}</div>
-<div class="btn">{{Botão|color=blue|link=Especial:FormEdit/Artigo com geolocalização|name=Escrever sua história}}</div>
+<div class="btn">{{Botão|color=blue|link=Especial:FormStart/Artigo com geolocalização|name=Escrever sua história}}</div>
 </div></div>
