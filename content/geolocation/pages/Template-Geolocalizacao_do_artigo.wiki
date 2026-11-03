@@ -5,4 +5,59 @@
 |precisao={{{precisao|}}}
 |tipo_local={{{tipo_local|}}}
 |exibir_no_mapa={{{exibir_no_mapa|}}}
-}}</includeonly><noinclude>[[Predefinição:Geolocalização do artigo/doc|Documentação]]</noinclude>
+}}</includeonly><noinclude>
+[[Predefinição:Geolocalização do artigo/doc|Documentação]]
+
+<templatedata>
+{
+  "description": "Localização associada à história. Para escolher ou mover o ponto, volte à página da história e use a opção 'Editar localização' (mapa interativo). Não é necessário digitar coordenadas neste editor.",
+  "format": "block",
+  "params": {
+    "localizacao": {
+      "label": "Ponto no mapa (use Editar localização)",
+      "description": "Coordenadas internas do mapa. Para escolher ou reposicionar, salve a história e use a opção Editar localização na página do artigo.",
+      "type": "string",
+      "example": "-15.78010000, -47.92920000",
+      "suggested": true
+    },
+    "exibir_no_mapa": {
+      "label": "Solicitar exibição no mapa",
+      "description": "sim: solicitar avaliação editorial do ponto; não: não solicitar. A localização só será mostrada no mapa principal depois da aprovação.",
+      "type": "string",
+      "suggested": true,
+      "example": "sim"
+    },
+    "latitude": {
+      "label": "Latitude antiga (não editar)",
+      "description": "Campo legado. Para reposicionar, use Editar localização no artigo.",
+      "type": "string",
+      "deprecated": "Usar o campo localizacao e o editor visual de mapa"
+    },
+    "longitude": {
+      "label": "Longitude antiga (não editar)",
+      "description": "Campo legado. Para reposicionar, use Editar localização no artigo.",
+      "type": "string",
+      "deprecated": "Usar o campo localizacao e o editor visual de mapa"
+    },
+    "precisao": {
+      "label": "Precisão do ponto",
+      "description": "Informação editorial opcional sobre a precisão geográfica.",
+      "type": "string"
+    },
+    "tipo_local": {
+      "label": "Tipo de localização",
+      "description": "Informação editorial opcional sobre o local informado.",
+      "type": "string"
+    }
+  },
+  "paramOrder": [
+    "localizacao",
+    "exibir_no_mapa",
+    "precisao",
+    "tipo_local",
+    "latitude",
+    "longitude"
+  ]
+}
+</templatedata>
+</noinclude>
