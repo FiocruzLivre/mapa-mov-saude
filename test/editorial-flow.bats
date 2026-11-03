@@ -18,6 +18,8 @@ setup() {
   [ "$status" -eq 0 ]
   run grep -F "wfLoadExtension( 'Moderation' );" "$settings"
   [ "$status" -eq 0 ]
+  run grep -F "NS_MAIN, NS_FILE" "$settings"
+  [ "$status" -eq 0 ]
   run grep -F "['reviewer']['moderation'] = true;" "$settings"
   [ "$status" -eq 0 ]
   run jq -e '.require["mediawiki/moderation"] == "1.9.8" and

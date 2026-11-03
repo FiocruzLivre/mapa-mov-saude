@@ -477,7 +477,9 @@ $wgMapamovEditorialModeration = filter_var(
 );
 if ( $wgMapamovEditorialModeration ) {
     wfLoadExtension( 'Moderation' );
-    $wgModerationOnlyInNamespaces = [ NS_MAIN ];
+    // Articles and their images can both change the homepage indirectly.
+    // Home transclusion templates themselves are sysop-protected.
+    $wgModerationOnlyInNamespaces = [ NS_MAIN, NS_FILE ];
     $wgGroupPermissions['reviewer']['moderation'] = true;
     // Email for queued edits is sent via ArticleGeolocation's Echo integration.
     $wgModerationNotificationEnable = false;
