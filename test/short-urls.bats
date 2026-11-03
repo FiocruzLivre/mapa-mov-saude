@@ -29,6 +29,10 @@ setup() {
   [ "$status" -eq 0 ]
   run grep -F 'RewriteCond %{QUERY_STRING} ^$' "$conf"
   [ "$status" -eq 0 ]
+  run grep -F 'RewriteCond %{REQUEST_URI} !^/index\.php/' "$conf"
+  [ "$status" -eq 0 ]
   run grep -F 'RewriteRule ^index\.php/(.+)$ /$1' "$conf"
+  [ "$status" -eq 0 ]
+  run grep -F '[R=301,L,NE]' "$conf"
   [ "$status" -eq 0 ]
 }
