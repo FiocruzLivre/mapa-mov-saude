@@ -11,6 +11,10 @@ php maintenance/run.php edit --user editor_teste 'Template:Geolocalização do a
     < "$pages/Template-Geolocalizacao_do_artigo.wiki"
 php maintenance/run.php edit --user editor_teste 'Form:Artigo com geolocalização' \
     < "$pages/Form-Artigo_com_geolocalizacao.wiki"
+# A origem da wiki já oferece Botão; o fixture local preserva sua API mínima.
+php maintenance/run.php edit --user editor_teste 'Template:Botão' <<'WIKITEXT'
+[[{{{link}}}|{{{name|Botão}}}]]
+WIKITEXT
 php maintenance/run.php edit --user editor_teste 'Template:Bloco Como participar' \
     < "$pages/Template-Bloco_Como_participar.wiki"
 php maintenance/run.php edit --user editor_teste 'MediaWiki:Common.js' \
