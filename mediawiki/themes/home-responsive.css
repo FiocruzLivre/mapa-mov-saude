@@ -1,0 +1,72 @@
+/* Loaded only on the main page by LocalSettings.php. */
+.wiki-docs-header {
+    max-width: 100%;
+}
+#principal figure,
+#principal figure > a,
+#principal figure img,
+#principal .mw-file-element {
+    max-width: 100%;
+    height: auto;
+}
+#principal figure {
+    margin-inline: auto;
+}
+#principal .mw-inputbox-centered,
+#principal .mw-inputbox-form-inline,
+#principal .input-group {
+    max-width: 100%;
+    min-width: 0;
+}
+#principal .mw-inputbox-form-inline input {
+    min-width: 0;
+    max-width: 100%;
+}
+@media (max-width: 767.98px) {
+    .wiki-docs-header {
+        padding-inline: 0;
+        padding-bottom: 1rem;
+    }
+    #principal.p-5 {
+        padding: 1rem !important;
+    }
+    #principal h3 {
+        font-size: clamp(1.25rem, 5vw, 1.65rem);
+        line-height: 1.3;
+        overflow-wrap: break-word;
+    }
+    #principal .lead {
+        font-size: 1rem;
+        line-height: 1.55;
+    }
+    #principal .mw-inputbox-form-inline {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .5rem;
+        width: 100%;
+    }
+    #principal .mw-inputbox-form-inline input[type="text"],
+    #principal .mw-inputbox-form-inline input[type="search"] {
+        flex: 1 1 100%;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    #principal .mw-inputbox-form-inline input[type="submit"] {
+        min-height: 40px;
+    }
+    #mapa-interativo .mw-kartographer-map {
+        height: min(65svh, 560px) !important;
+        min-height: 350px;
+    }
+    /* Legacy .col-xs-6 is not a Bootstrap 5 column; stack all home cards. */
+    #mw-content-text .mw-parser-output > .row > [class*="col-"] {
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+    #mw-content-text .mw-parser-output .card {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
+}

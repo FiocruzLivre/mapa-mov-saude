@@ -1,0 +1,8 @@
+<div class="card mb-4">
+  <h3 class="card-header">Boletim digital</h3>
+  <div class="card-body">
+    <p class="card-text">Cadastre-se para receber o nosso boletim mensal e fique por dentro das novidades.</p>
+    {{Botão|color=blue|name=Inscreva-se!|link=MapaMovSaude:Boletim|aria-label=“Inscreva-se para receber o boletim”}}
+  </div>
+</div>
+__NOTOC__

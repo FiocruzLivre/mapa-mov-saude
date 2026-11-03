@@ -401,6 +401,18 @@ $wgKartographerDfltStyle = 'osm';
 # marker API defaults to a gray Maki pin and replaces Leaflet's classic icon.
 $wgKartographerSimpleStyleMarkers = false;
 
+# Main-page-only responsive styles; do not change article and editorial layouts.
+$wgResourceModules['ext.mapamov.homeResponsive'] = [
+    'styles' => [ 'themes/home-responsive.css' ],
+    'localBasePath' => $IP,
+    'remoteBasePath' => $wgScriptPath,
+];
+$wgHooks['BeforePageDisplay'][] = static function ( $out ): void {
+    if ( $out->getTitle()->isMainPage() ) {
+        $out->addModuleStyles( 'ext.mapamov.homeResponsive' );
+    }
+};
+
 # CSS
 wfLoadExtension( 'Css' );
 

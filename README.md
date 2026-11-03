@@ -31,3 +31,10 @@ bats --recursive test
 ```
 
 Para instalar ou atualizar dependências, siga [dependencies/README.md](dependencies/README.md) e valide o resultado em homologação. Não execute `composer update` diretamente na produção.
+
+## Layout responsivo da página inicial
+
+O CSS `mediawiki/themes/home-responsive.css` é carregado apenas na página principal.
+A correção do espaçamento do boletim exige publicar também a revisão de
+`content/home/pages/Template-Bloco_Boletim_digital.wiki` na página MediaWiki
+`Predefinição:Bloco Boletim digital`, preservando seu histórico de alterações.
