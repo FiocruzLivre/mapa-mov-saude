@@ -28,4 +28,6 @@ Para desativar novamente, restaure o fluxo anterior de criação, deixe de dispo
 
 Para homologar, instalar as páginas em uma wiki descartável com Page Forms, GeoData e Scribunto; testar criação, edição, remoção de ponto e preservação do conteúdo da história. Não alterar artigos reais automaticamente.
 
+A predefinição agora inclui TemplateData em português com rótulos e instruções para o VisualEditor: recomenda usar **Editar localização** na página da história, esclarece que o ponto depende de aprovação e identifica os campos antigos de latitude/longitude como legados. TemplateData **não cria um mapa dentro do diálogo de predefinição**; a edição pelo mapa permanece uma ação separada da extensão ArticleGeolocation.
+
 O campo Leaflet grava localizacao como “latitude, longitude”. O módulo Lua mantém leitura das antigas chaves latitude e longitude apenas por compatibilidade. A publicação no mapa principal é uma decisão separada, não uma propriedade do GeoData.
