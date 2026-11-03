@@ -182,6 +182,7 @@ wfLoadExtension( 'WikiEditor');
 wfLoadExtension( 'EmbedVideo' );
 wfLoadExtension( 'GeoData' );
 
+wfLoadExtension( 'Echo' );
 wfLoadExtension( 'PageForms' );
 
 
@@ -207,8 +208,13 @@ $wgRestrictDisplayTitle = false;
 wfLoadExtension( 'VisualEditor' );
 // O editor nativo permanece ativo. O novo formulario geografico e opcional.
 // A ativacao exige tambem publicar as paginas do formulario na wiki.
+// Avisos imediatos aos moderadores quando uma localizacao solicita revisao.
+// Contas com e-mail confirmado podem desativar a categoria nas preferencias.
+$wgDefaultUserOptions['echo-subscriptions-email-article-geolocation'] = true;
+$wgGroupPermissions['reviewer']['articlegeolocation-review'] = true;
+
 $wgMapamovGeolocationEnabled = filter_var(
-	getenv( 'WG_MAPAMOV_GEOLOCATION_ENABLED' ) ?: '0', FILTER_VALIDATE_BOOLEAN
+	getenv( 'WG_MAPAMOV_GEOLOCATION_ENABLED' ) ?: '1', FILTER_VALIDATE_BOOLEAN
 );
 if ( $wgMapamovGeolocationEnabled ) {
 	wfLoadExtension( 'VEForAll' );

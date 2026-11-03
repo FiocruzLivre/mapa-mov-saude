@@ -20,9 +20,11 @@ A localização registrada na história é pública. A inclusão do PIN no mapa 
 
 ## Ativação controlada
 
-O deploy deste repositório **não** publica automaticamente páginas de formulário, nem troca o fluxo existente de criação de histórias. Por padrão, `WG_MAPAMOV_GEOLOCATION_ENABLED=0`: o site continua usando a criação de artigos e o VisualEditor nativo do MediaWiki, sem exibir ou solicitar localização. O suporte VEForAll só é carregado quando a opção é ativada.
+O formulário de criação com geolocalização é habilitado nesta configuração, a menos que o ambiente defina WG_MAPAMOV_GEOLOCATION_ENABLED=0. A instalação requer VisualEditor, VEForAll 0.8.1, Page Forms, GeoData e ArticleGeolocation. As notificações editoriais dependem também do Echo e de suas tabelas instaladas.
 
-Depois da autorização editorial, configure `WG_MAPAMOV_GEOLOCATION_ENABLED=1`, disponibilize a dependência VEForAll e publique as páginas listadas acima por meio do processo de implantação do MediaWiki. A página `MediaWiki:Common.js` contém **somente um trecho complementar** e não deve substituir o JavaScript já existente na wiki: faça a integração preservando os scripts atuais. Só então altere os links de criação para o formulário. Não basta alterar o valor da configuração caso as páginas ainda não tenham sido instaladas.
+O deploy de arquivos não publica automaticamente as páginas do formulário: instale-as no namespace Form (Form:Artigo com geolocalização), não no namespace de artigo Formulário. O JavaScript MediaWiki:Common.js deve ser integrado preservando os scripts existentes, e o link de criação da home deve apontar ao formulário publicado.
+
+Os avisos de localização por e-mail estão ativos por padrão para moderadores com e-mail confirmado, respeitando preferências individuais. A moderação de coordenadas não equivale à aprovação de texto ou de outros blocos da home.
 
 Para desativar novamente, restaure o fluxo anterior de criação, deixe de disponibilizar o formulário aos usuários e configure `WG_MAPAMOV_GEOLOCATION_ENABLED=0`. A desativação não remove dados geográficos anteriormente publicados. A moderação do mapa é uma funcionalidade separada da extensão ArticleGeolocation.
 

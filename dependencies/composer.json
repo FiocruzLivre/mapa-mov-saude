@@ -42,7 +42,8 @@
         "mediawiki/no-title": "^1.46",
         "mediawiki/css": "^1.46",
         "miraheze/matomo-analytics": "1.5.0",
-        "cweagans/composer-patches": "2.0.0"
+        "cweagans/composer-patches": "2.0.0",
+        "mediawiki/ve-for-all": "0.8.1"
     },
     "repositories": [
         {
@@ -328,6 +329,19 @@
                 },
                 "extra": {
                     "installer-name": "WikiSEO"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "mediawiki/ve-for-all",
+                "type": "mediawiki-extension",
+                "version": "0.8.1",
+                "source": {
+                    "type": "git",
+                    "url": "https://gerrit.wikimedia.org/r/mediawiki/extensions/VEForAll",
+                    "reference": "e78bcde46752b598186dc0921454c205dd6aea54"
                 }
             }
         }
