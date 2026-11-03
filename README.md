@@ -13,6 +13,15 @@ A imagem reutilizável do MediaWiki e o Compose base ficam em [mediawiki-develop
 
 A geolocalização opcional pertence à extensão independente [ArticleGeolocation](https://github.com/FiocruzLivre/mediawiki-extension-article-geolocation).
 
+## URLs de artigos
+
+O Mapa publica artigos em URLs curtas na raiz do domínio (\`/$1\`). A implantação
+deve montar [mediawiki/apache/short-urls.conf](mediawiki/apache/short-urls.conf)
+em \`/etc/apache2/conf-enabled/mapamov-short-urls.conf:ro\` **somente no serviço
+deste site**. O arquivo ativa \`mod_rewrite\` na instalação Apache existente,
+preserva as rotas de API e recursos, e mantém os links legados de leitura.
+URLs antigas com parâmetros ou métodos diferentes de GET/HEAD não são redirecionadas.
+
 ## Verificação
 
 Execute no checkout deste repositório:
