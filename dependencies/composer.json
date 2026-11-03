@@ -43,7 +43,8 @@
         "mediawiki/css": "^1.46",
         "miraheze/matomo-analytics": "1.5.0",
         "cweagans/composer-patches": "2.0.0",
-        "mediawiki/ve-for-all": "0.8.1"
+        "mediawiki/ve-for-all": "0.8.1",
+        "mediawiki/moderation": "1.9.8"
     },
     "repositories": [
         {
@@ -342,6 +343,19 @@
                     "type": "git",
                     "url": "https://gerrit.wikimedia.org/r/mediawiki/extensions/VEForAll",
                     "reference": "e78bcde46752b598186dc0921454c205dd6aea54"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "mediawiki/moderation",
+                "type": "mediawiki-extension",
+                "version": "1.9.8",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/edwardspec/mediawiki-moderation.git",
+                    "reference": "f0d423d11eb954ed7429d7618c1868303a5a5832"
                 }
             }
         }

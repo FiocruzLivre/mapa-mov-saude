@@ -213,8 +213,11 @@ wfLoadExtension( 'VisualEditor' );
 $wgDefaultUserOptions['echo-subscriptions-email-article-geolocation'] = true;
 $wgGroupPermissions['reviewer']['articlegeolocation-review'] = true;
 
+// Opt-in only after the form pages, schema and dependencies have been deployed.
 $wgMapamovGeolocationEnabled = filter_var(
-	getenv( 'WG_MAPAMOV_GEOLOCATION_ENABLED' ) ?: '1', FILTER_VALIDATE_BOOLEAN
+	getenv( 'WG_MAPAMOV_GEOLOCATION_ENABLED' ) === false
+		? '0' : getenv( 'WG_MAPAMOV_GEOLOCATION_ENABLED' ),
+	FILTER_VALIDATE_BOOLEAN
 );
 if ( $wgMapamovGeolocationEnabled ) {
 	wfLoadExtension( 'VEForAll' );
@@ -463,3 +466,19 @@ $wgShowDebug = false;
 $wgDevelopmentWarnings = false;
 $wgShowExceptionDetails = false;
 
+
+// Content moderation is independent from approval for display on the home map.
+// Keep this extension last: it intercepts MediaWiki and Page Forms saves.
+// Enabled only after the Moderation database schema and browser flow are checked.
+$wgMapamovEditorialModeration = filter_var(
+    getenv( 'WG_MAPAMOV_EDITORIAL_MODERATION_ENABLED' ) === false
+        ? '0' : getenv( 'WG_MAPAMOV_EDITORIAL_MODERATION_ENABLED' ),
+    FILTER_VALIDATE_BOOLEAN
+);
+if ( $wgMapamovEditorialModeration ) {
+    wfLoadExtension( 'Moderation' );
+    $wgModerationOnlyInNamespaces = [ NS_MAIN ];
+    $wgGroupPermissions['reviewer']['moderation'] = true;
+    // Email for queued edits is sent via ArticleGeolocation's Echo integration.
+    $wgModerationNotificationEnable = false;
+}

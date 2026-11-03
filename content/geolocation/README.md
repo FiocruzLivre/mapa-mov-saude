@@ -20,11 +20,11 @@ A localização registrada na história é pública. A inclusão do PIN no mapa 
 
 ## Ativação controlada
 
-O formulário de criação com geolocalização é habilitado nesta configuração, a menos que o ambiente defina WG_MAPAMOV_GEOLOCATION_ENABLED=0. A instalação requer VisualEditor, VEForAll 0.8.1, Page Forms, GeoData e ArticleGeolocation. As notificações editoriais dependem também do Echo e de suas tabelas instaladas.
+O formulário é ativado explicitamente por WG_MAPAMOV_GEOLOCATION_ENABLED=1 após publicar suas páginas e validar dependências. A instalação requer VisualEditor, VEForAll 0.8.1, Page Forms, GeoData e ArticleGeolocation. As notificações editoriais dependem também do Echo e de suas tabelas instaladas.
 
 O deploy de arquivos não publica automaticamente as páginas do formulário: instale-as no namespace Form (Form:Artigo com geolocalização), não no namespace de artigo Formulário. O JavaScript MediaWiki:Common.js deve ser integrado preservando os scripts existentes, e o link de criação da home deve apontar ao formulário publicado.
 
-Os avisos de localização por e-mail estão ativos por padrão para moderadores com e-mail confirmado, respeitando preferências individuais. A moderação de coordenadas não equivale à aprovação de texto ou de outros blocos da home.
+Para submeter histórias e edições à fila editorial antes da publicação, habilite WG_MAPAMOV_EDITORIAL_MODERATION_ENABLED=1 somente após instalar o esquema da extensão Moderation. A fila fica em Especial:Moderation; administradores e revisores podem aprovar. Solicitações de ponto são revisadas separadamente em Especial:ArticleGeolocationReview. Os avisos usam Echo e as preferências individuais de e-mail. As predefinições da home permanecem protegidas contra edição pública. Novas aprovações de pontos são vinculadas à revisão do artigo.
 
 Para desativar novamente, restaure o fluxo anterior de criação, deixe de disponibilizar o formulário aos usuários e configure `WG_MAPAMOV_GEOLOCATION_ENABLED=0`. A desativação não remove dados geográficos anteriormente publicados. A moderação do mapa é uma funcionalidade separada da extensão ArticleGeolocation.
 
